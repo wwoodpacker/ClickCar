@@ -3,9 +3,7 @@ package com.taxi.clickcar.Intro;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntro2;
-import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
 
 /**
