@@ -1,9 +1,12 @@
 package com.taxi.clickcar.Intro;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro2;
+import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
 
 /**
@@ -12,6 +15,16 @@ import com.taxi.clickcar.R;
 public class ClickIntro extends AppIntro2 {
     @Override
     public void init(Bundle savedInstanceState) {
+        SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        if(pref.getBoolean("activity_executed", false)){
+            loadMainActivity();
+           } else {
+            SharedPreferences.Editor ed = pref.edit();
+            ed.putBoolean("activity_executed", true);
+            ed.commit();
+
+        }
+
         addSlide(ClickSlide.newInstance(R.layout.intro));
         addSlide(ClickSlide.newInstance(R.layout.intro2));
         setFadeAnimation();
