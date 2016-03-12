@@ -15,7 +15,7 @@ import com.taxi.clickcar.R;
 public class ClickIntro extends AppIntro2 {
     @Override
     public void init(Bundle savedInstanceState) {
-        SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        /*SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         if(pref.getBoolean("activity_executed", false)){
             loadMainActivity();
            } else {
@@ -23,7 +23,7 @@ public class ClickIntro extends AppIntro2 {
             ed.putBoolean("activity_executed", true);
             ed.commit();
 
-        }
+        }*/
 
         addSlide(ClickSlide.newInstance(R.layout.intro));
         addSlide(ClickSlide.newInstance(R.layout.intro2));
