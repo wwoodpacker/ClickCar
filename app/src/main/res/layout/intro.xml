@@ -2,50 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#222222"
+    android:background="#ffffff"
     android:layout_weight="10"
     android:id="@+id/main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="32dp"
-        android:layout_weight="3"
-        android:fontFamily="sans-serif-thin"
+
         android:textColor="#ffffff"
         android:paddingRight="32dp"
-        android:textSize="28sp"
-        android:text="Slide 1 title"/>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="5">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:src="@drawable/ic_slide1"/>
-    </LinearLayout>
+        android:background="@drawable/logo_intro"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:paddingLeft="64dp"
-        android:paddingRight="64dp"
-        android:textSize="16sp"
-        android:text="Loooooooooooooooo[...]ooooooooong descreption here"/>
+        android:layout_height="wrap_content"
+        android:text="@string/intro1large"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="#747474"
+        android:layout_gravity="center_horizontal" />
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="64dp" />
+        android:layout_height="wrap_content"
+        android:text="@string/intro1small"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="15sp"
+        android:textColor="#6a6a6a" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/intro1">
+
+    </LinearLayout>
+
 </LinearLayout>

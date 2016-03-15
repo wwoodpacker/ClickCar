@@ -2,5 +2,10 @@
     <string name="app_name">СlickСar</string>
     <string name="action_settings"></string>
     <string name="server_url">http://176.38.246.10:7200</string>
-
+    <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
+    <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
+    <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
+    <string name="intro2small">Нажмите кнопку ЦЕНА и:\n\t-округляйте сумму;\n\t-повышайте стоимость\n для учкорения поиска в часы пик;</string>
+    <string name="intro3large">ЭТО КОНТРОЛЬ КАЧЕСТВА</string>
+    <string name="intro3small">Оставляйте отзывы к своим поездкам,\n оценивайте работу водителя это \nпозволит улучшить качество сервиса.</string>
 </resources>

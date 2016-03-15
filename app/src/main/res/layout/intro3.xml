@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/intro2large"
+        android:text="@string/intro3large"
         android:gravity="center"
         android:textSize="30sp"
         android:textColor="#747474"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/intro2small"
+        android:text="@string/intro3small"
         android:textSize="15sp"
         android:textColor="#6a6a6a"
         android:layout_gravity="center_horizontal" />
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/intro2">
+        android:background="@drawable/intro3">
 
     </LinearLayout>
 
