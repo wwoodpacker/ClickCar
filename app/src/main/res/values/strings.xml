@@ -8,4 +8,15 @@
     <string name="intro2small">Нажмите кнопку ЦЕНА и:\n\t-округляйте сумму;\n\t-повышайте стоимость\n для учкорения поиска в часы пик;</string>
     <string name="intro3large">ЭТО КОНТРОЛЬ КАЧЕСТВА</string>
     <string name="intro3small">Оставляйте отзывы к своим поездкам,\n оценивайте работу водителя это \nпозволит улучшить качество сервиса.</string>
+    <string name="btn_order_taxi">Заказать такси</string>
+    <string name="btn_registration">Регистация</string>
+    <string name="label_register">Регистрация</string>
+    <string name="login">Логин(Почта)</string>
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
+    <string name="pass">Пароль</string>
+    <string name="pass_again">Пароль повторно</string>
+    <string name="accses_reg">Подтвердить</string>
+    <string name="confirm_code">Ожидайте код...</string>
+
 </resources>

@@ -41,7 +41,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/intro1">
+        android:background="@drawable/intro1"
+        android:layout_gravity="center_horizontal">
 
     </LinearLayout>
 

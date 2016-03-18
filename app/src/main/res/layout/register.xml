@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/process_notactive"
+
+    >
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ed_login"
+        android:hint="Login"
+        android:layout_marginTop="58dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="150dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ed_name"
+        android:hint="Ivan"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/ed_login"
+        android:layout_alignLeft="@+id/ed_login"
+        android:layout_alignStart="@+id/ed_login"
+        android:layout_marginRight="50dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:hint="+380123456789"
+        android:id="@+id/ed_phone"
+        android:layout_below="@+id/ed_name"
+        android:layout_alignRight="@+id/ed_login"
+        android:layout_alignEnd="@+id/ed_login"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="150dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="********"
+        android:id="@+id/ed_pass"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/ed_name"
+        android:layout_alignStart="@+id/ed_name"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="50dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="********"
+        android:id="@+id/ed_pass_again"
+        android:layout_below="@+id/ed_pass"
+        android:layout_alignRight="@+id/ed_phone"
+        android:layout_alignEnd="@+id/ed_phone"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="150dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:id="@+id/textView"
+        android:layout_alignBottom="@+id/ed_login"
+        android:layout_toLeftOf="@+id/ed_name"
+        android:layout_toStartOf="@+id/ed_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:id="@+id/textView2"
+        android:layout_alignBottom="@+id/ed_name"
+        android:layout_toLeftOf="@+id/ed_name"
+        android:layout_toStartOf="@+id/ed_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/phone"
+        android:id="@+id/textView3"
+        android:layout_alignBottom="@+id/ed_phone"
+        android:layout_toLeftOf="@+id/ed_name"
+        android:layout_toStartOf="@+id/ed_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pass"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ed_pass"
+        android:layout_toStartOf="@+id/ed_pass" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pass_again"
+        android:id="@+id/textView5"
+        android:layout_alignTop="@+id/ed_pass_again"
+        android:layout_toLeftOf="@+id/ed_pass"
+        android:layout_toStartOf="@+id/ed_pass" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/accses_reg"
+        android:id="@+id/btn_acsses_reg"
+        android:onClick="OnClick"
+        android:background="@color/actionBar_color"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
+</RelativeLayout>

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="process_active">#f5da07</color>
-    <color name="process_notactive">#bababa</color>
+    <color name="process_notactive">#dcdcdc</color>
+    <color name="actionBar_color">#FFFBBE1C</color>
 </resources>

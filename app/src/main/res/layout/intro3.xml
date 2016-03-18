@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:layout_weight="10"
-    android:id="@+id/main">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="32dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
 
-        android:textColor="#ffffff"
-        android:paddingRight="32dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
 
         android:background="@drawable/logo_intro"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/intro3large"
         android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="#747474"
-        android:layout_gravity="center_horizontal" />
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:textColor="#ffffff" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="@string/intro3large"
+        android:textColor="#747474"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="@string/intro3small"
-        android:textSize="15sp"
         android:textColor="#6a6a6a"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="15sp" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/intro3"
+
         android:gravity="center"
-        android:background="@drawable/intro3">
+        android:orientation="vertical">
 
     </LinearLayout>
 

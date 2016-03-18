@@ -1,6 +1,7 @@
 package com.taxi.clickcar;
 
 import android.accounts.NetworkErrorException;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.util.Xml;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,20 +45,39 @@ public static final String ADRESS="http://176.38.246.10:7200";
 public static final String AUTH_URL=ADRESS+"/api/account";
 public static final String CONFIRM_CODE=ADRESS+"/api/account/register/sendConfirmCode";
 public static final String REGISTER=ADRESS+"/api/account/register";
+public Button btnReg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  my task = new my();
-       // task.execute();
+        // my task = new my();
+       //  task.execute();
+        btnReg =(Button)findViewById(R.id.btn_register);
+
+
+
         try {
-            String sha512=hashText("1");
-            Log.e("sha512",sha512);
+            String sha512 = hashText("1");
+            Log.e("sha512", sha512);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
     }
+    public void OnClick(View v){
+        switch (v.getId()){
+            case R.id.btn_order:
+
+                break;
+            case R.id.btn_register:
+                Intent intent= new Intent(this,Register.class);
+                startActivity(intent);
+                break;
+        }
+
+    }
+
     public static String convertByteToHex(byte data[])
     {
         StringBuffer hexData = new StringBuffer();
@@ -82,7 +103,7 @@ public static final String REGISTER=ADRESS+"/api/account/register";
          HttpResponse response=null;
          HttpPost post = new HttpPost(getString(R.string.server_url)+"/api/account/register/sendConfirmCode");
          List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-         pairs.add(new BasicNameValuePair("", "380508570678"));
+         pairs.add(new BasicNameValuePair("phone", "380637988976"));
          try {
              post.setEntity(new UrlEncodedFormEntity(pairs));
          } catch (UnsupportedEncodingException e) {
