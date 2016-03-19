@@ -2,6 +2,9 @@
     <string name="app_name">СlickСar</string>
     <string name="action_settings"></string>
     <string name="server_url">http://176.38.246.10:7200</string>
+    <string name="send_confirm_code_url">/api/account/register/sendConfirmCode</string>
+    <string name="sign_in_url">/api/account</string>
+    <string name="register_url">/api/account/register</string>
     <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
     <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
     <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
@@ -12,11 +15,14 @@
     <string name="btn_registration">Регистация</string>
     <string name="label_register">Регистрация</string>
     <string name="login">Логин(Почта)</string>
+    <string name="signin_phone">Номер телефона</string>
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
     <string name="pass">Пароль</string>
     <string name="pass_again">Пароль повторно</string>
     <string name="accses_reg">Подтвердить</string>
-    <string name="confirm_code">Ожидайте код...</string>
+    <string name="confirm_code">Код подтверждения</string>
+    <string name="sing_in">Вход</string>
+    
 
 </resources>

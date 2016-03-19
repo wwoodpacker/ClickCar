@@ -1,6 +1,7 @@
 package com.taxi.clickcar;
 
 import android.accounts.NetworkErrorException;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,10 +27,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,27 +44,31 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
-public static final String ADRESS="http://176.38.246.10:7200";
-public static final String AUTH_URL=ADRESS+"/api/account";
-public static final String CONFIRM_CODE=ADRESS+"/api/account/register/sendConfirmCode";
-public static final String REGISTER=ADRESS+"/api/account/register";
-public Button btnReg;
+
+    public Button btnReg;
+    public Button btnOrder;
+    public Button btnEnter;
+    public EditText sign_login;
+    public EditText sign_pass;
+
+    public String login="";
+    public String password="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // my task = new my();
-       //  task.execute();
         btnReg =(Button)findViewById(R.id.btn_register);
-
-
-
+        btnEnter=(Button)findViewById(R.id.btn_sing_in);
+        btnOrder =(Button)findViewById(R.id.btn_order);
+        sign_login=(EditText)findViewById(R.id.login_field);
+        sign_pass=(EditText)findViewById(R.id.password_field);
         try {
             String sha512 = hashText("1");
-            Log.e("sha512", sha512);
+          //  Log.e("sha512", sha512);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,11 +84,42 @@ public Button btnReg;
                 Intent intent= new Intent(this,Register.class);
                 startActivity(intent);
                 break;
+            case R.id.btn_sing_in:
+                login=sign_login.getText().toString();
+                password=sign_pass.getText().toString();
+
+                if (login.length()<=0){
+                    Toast.makeText(this,"Please enter login",Toast.LENGTH_SHORT).show();
+                }else
+                if(password.length()<=0){
+                    Toast.makeText(this,"Please enter password",Toast.LENGTH_SHORT).show();
+                }else{
+                    SignIn task= new SignIn();
+                    String str="";
+                    try {
+                        task.execute(login,hashText(password));
+                        str=task.get();
+                        JSONObject obj = new JSONObject(str);
+                        String ph=obj.getString("user_phone");
+                        Log.e("Auth JSON:",str);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+
         }
 
     }
 
-    public static String convertByteToHex(byte data[])
+    public  String convertByteToHex(byte data[])
     {
         StringBuffer hexData = new StringBuffer();
         for (int byteIndex = 0; byteIndex < data.length; byteIndex++)
@@ -87,48 +128,73 @@ public Button btnReg;
         return hexData.toString();
     }
 
-    public static String hashText(String textToHash) throws Exception
+    public String hashText(String textToHash) throws Exception
     {
         final MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
         sha512.update(textToHash.getBytes());
 
         return convertByteToHex(sha512.digest());
     }
- class my extends AsyncTask<Void,Void,Void>{
+    class SignIn extends AsyncTask<String,Void,String> {
+        private ProgressDialog pdia;
 
-     @Override
-     protected Void doInBackground(Void... params) {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdia=new ProgressDialog(MainActivity.this);
+            pdia.setMessage("Авторизация...");
+            pdia.show();
+        }
 
-         HttpClient client = new DefaultHttpClient();
-         HttpResponse response=null;
-         HttpPost post = new HttpPost(getString(R.string.server_url)+"/api/account/register/sendConfirmCode");
-         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-         pairs.add(new BasicNameValuePair("phone", "380637988976"));
-         try {
-             post.setEntity(new UrlEncodedFormEntity(pairs));
-         } catch (UnsupportedEncodingException e) {
-             e.printStackTrace();
-         }
-         try {
-             response = client.execute(post);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }catch (NullPointerException ex){
+        @Override
+        protected void onPostExecute(String strJson) {
+            super.onPostExecute(strJson);
 
-         }
-         String text="";
-         HttpEntity entity = null;
-         if (response != null) {
-             entity = response.getEntity();
-         }
-         try {
-             text=GetText(entity.getContent());
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-         Log.e("SMS",text);
-         return null;
-     }
+            pdia.dismiss();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.e("Sign in", "in process...");
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse response = null;
+            HttpPost post = new HttpPost(getString(R.string.server_url)+getString(R.string.sign_in_url));
+            post.setHeader("Accept", "application/json");
+            post.setHeader("Content-type", "application/json; charset=utf-8");
+            JSONObject object =new JSONObject();
+            try {
+                object.put("Login", params[0]);
+                object.put("Password", params[1]);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            post.setEntity(new StringEntity(object.toString(),"UTF-8"));
+            try {
+                response = client.execute(post);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NullPointerException ex) {
+
+            }
+            String text = "";
+            HttpEntity entity = null;
+            if (response != null) {
+                entity = response.getEntity();
+            }
+            try {
+                text = GetText(entity.getContent());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            catch (NullPointerException e){
+                e.printStackTrace();
+                return "Wrong phone or password";
+            }
+            return text;
+        }
+    }
+
      public String GetText(InputStream in) {
          String text = "";
          BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -151,4 +217,3 @@ public Button btnReg;
          return text;
      }
  }
-}

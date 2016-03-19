@@ -18,25 +18,26 @@
         android:src="@drawable/logo_intro" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/login_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="178dp"
+        android:layout_marginTop="55dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="@string/signin_phone"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignTop="@+id/editText"
+        android:layout_alignLeft="@+id/login_field"
+        android:layout_alignStart="@+id/login_field"
+        android:layout_alignTop="@+id/login_field"
         android:layout_marginTop="53dp"
         android:ems="10"
+        android:hint="@string/pass"
         android:inputType="textPassword" />
 
     <Button
@@ -46,6 +47,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/btn_register"
+        android:background="@color/actionBar_color"
         android:onClick="OnClick"
         android:text="@string/btn_order_taxi" />
 
@@ -57,6 +59,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="38dp"
+        android:background="@color/actionBar_color"
         android:onClick="OnClick"
         android:text="@string/btn_registration" />
+
+    <Button
+        android:id="@+id/btn_sing_in"
+        android:layout_width="wrap_content"
+        android:onClick="OnClick"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/actionBar_color"
+        android:text="@string/sing_in" />
 </RelativeLayout>
