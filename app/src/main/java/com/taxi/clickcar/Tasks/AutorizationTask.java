@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.leo.simplearcloader.ArcConfiguration;
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
 
@@ -26,7 +29,8 @@ import java.io.InputStreamReader;
  * Created by Назар on 12.03.2016.
  */
 public class AutorizationTask extends AsyncTask<String,Void,String> {
-    private ProgressDialog pdia;
+
+    private SimpleArcDialog mDialog;
     private Context mContext;
     public AutorizationTask(Context context){
         mContext=context;
@@ -34,16 +38,19 @@ public class AutorizationTask extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pdia=new ProgressDialog(mContext);
-        pdia.setMessage("Авторизация...");
-        pdia.show();
+        mDialog = new SimpleArcDialog(mContext);
+        ArcConfiguration configuration = new ArcConfiguration(mContext);
+        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+        configuration.setText("Авторизация...");
+        mDialog.setConfiguration(configuration);
+        mDialog.show();
     }
 
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
-
-        pdia.dismiss();
+        mDialog.dismiss();
+       // pdia.dismiss();
     }
 
     @Override

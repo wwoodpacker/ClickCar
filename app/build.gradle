@@ -31,6 +31,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'org.json:json:20160212'
-
+    compile 'com.leo.simplearcloader:simplearcloader:1.0.+'
 
 }

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.leo.simplearcloader.ArcConfiguration;
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.R;
 
 import org.apache.http.HttpEntity;
@@ -28,7 +31,7 @@ import java.util.List;
  * Created by Назар on 20.03.2016.
  */
 public class GetConfirmCodeTask  extends AsyncTask<String,Void,String> {
-    private ProgressDialog pdia;
+    private SimpleArcDialog mDialog;
     private Context mContext;
 
     public GetConfirmCodeTask(Context context){
@@ -37,16 +40,19 @@ public class GetConfirmCodeTask  extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        pdia=new ProgressDialog(mContext);
-        pdia.setMessage("Загрузка...");
-        pdia.show();
-    }
+        mDialog = new SimpleArcDialog(mContext);
+        ArcConfiguration configuration = new ArcConfiguration(mContext);
+        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+        configuration.setText("Загрузка...");
+        mDialog.setConfiguration(configuration);
+        mDialog.show();
+        }
 
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
 
-        pdia.dismiss();
+        mDialog.dismiss();
     }
 
     @Override
