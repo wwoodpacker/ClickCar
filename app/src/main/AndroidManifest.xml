@@ -3,7 +3,7 @@
     package="com.taxi.clickcar">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +23,12 @@
             android:theme="@style/Theme.MyRegStyle">
 
         </activity>
+        <activity android:name=".Order"
+            android:screenOrientation="portrait"
+            android:label="Order"
+            android:logo="@drawable/ic_confirm_code"
+            android:theme="@style/Theme.MyRegStyle"
+            />
         <activity android:name=".ConfirmCode"
             android:screenOrientation="portrait"
             android:label="@string/confirm_code"

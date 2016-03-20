@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.taxi.clickcar.Tasks.GetConfirmCodeTask;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -80,7 +82,7 @@ public class Register extends Activity {
                 }
                 else
                 {
-                    GetConfirmCode getConfirmCode=new GetConfirmCode();
+                    GetConfirmCodeTask getConfirmCode=new GetConfirmCodeTask(this);
                     getConfirmCode.execute(ed_phone.getText().toString());
                     try {
                         String jsonstr=getConfirmCode.get();
@@ -101,78 +103,4 @@ public class Register extends Activity {
              break;
         }
     }
-
-    class GetConfirmCode extends AsyncTask<String,Void,String> {
-        private ProgressDialog pdia;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pdia=new ProgressDialog(Register.this);
-            pdia.setMessage("Загрузка...");
-            pdia.show();
-        }
-
-        @Override
-        protected void onPostExecute(String strJson) {
-            super.onPostExecute(strJson);
-
-            pdia.dismiss();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            Log.e("SMS", "sending...");
-            HttpClient client = new DefaultHttpClient();
-            HttpResponse response = null;
-            HttpPost post = new HttpPost(getString(R.string.server_url) + getString(R.string.send_confirm_code_url));
-            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("phone", params[0]));
-            try {
-                post.setEntity(new UrlEncodedFormEntity(pairs));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            try {
-                response = client.execute(post);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException ex) {
-
-            }
-            String text = "";
-            HttpEntity entity = null;
-            if (response != null) {
-                entity = response.getEntity();
-            }
-            try {
-                text = GetText(entity.getContent());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-           return text;
-        }
-    }
-    public String GetText(InputStream in) {
-        String text = "";
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            text = sb.toString();
-        } catch (Exception ex) {
-
-        } finally {
-            try {
-
-                in.close();
-            } catch (Exception ex) {
-            }
-        }
-        return text;
-    }
-
 }

@@ -2,7 +2,11 @@ package com.taxi.clickcar;
 
 import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,7 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.taxi.clickcar.Tasks.AutorizationTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -54,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
     public Button btnEnter;
     public EditText sign_login;
     public EditText sign_pass;
+    public View.OnClickListener mOnClickListener;
 
     public String login="";
     public String password="";
+    public String hashPass="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,51 +75,83 @@ public class MainActivity extends AppCompatActivity {
         btnOrder =(Button)findViewById(R.id.btn_order);
         sign_login=(EditText)findViewById(R.id.login_field);
         sign_pass=(EditText)findViewById(R.id.password_field);
-        try {
-            String sha512 = hashText("1");
-          //  Log.e("sha512", sha512);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
     }
+
+
+    public void setmOnClickListener(View.OnClickListener mOnClickListener) {
+        this.mOnClickListener = mOnClickListener;
+    }
+
+    public boolean CheckConnection(){
+
+        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo.State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+        NetworkInfo.State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING||wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
+            return true;
+        } else  {
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"No connection",Snackbar.LENGTH_LONG)
+                    .setAction("Hide", mOnClickListener);
+            snackbar.setActionTextColor(Color.RED);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(Color.DKGRAY);
+            TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.RED);
+            snackbar.show();
+            return false;
+        }
+
+    }
+
     public void OnClick(View v){
         switch (v.getId()){
             case R.id.btn_order:
+                if (CheckConnection()){
 
+                }
                 break;
             case R.id.btn_register:
-                Intent intent= new Intent(this,Register.class);
-                startActivity(intent);
+                if (CheckConnection()) {
+                    Intent intent = new Intent(this, Register.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.btn_sing_in:
-                login=sign_login.getText().toString();
-                password=sign_pass.getText().toString();
+                if (CheckConnection()) {
+                    login = sign_login.getText().toString();
+                    password = sign_pass.getText().toString();
 
-                if (login.length()<=0){
-                    Toast.makeText(this,"Please enter login",Toast.LENGTH_SHORT).show();
-                }else
-                if(password.length()<=0){
-                    Toast.makeText(this,"Please enter password",Toast.LENGTH_SHORT).show();
-                }else{
-                    SignIn task= new SignIn();
-                    String str="";
-                    try {
-                        task.execute(login,hashText(password));
-                        str=task.get();
-                        JSONObject obj = new JSONObject(str);
-                        String ph=obj.getString("user_phone");
-                        Log.e("Auth JSON:",str);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (login.length() <= 0) {
+                        Toast.makeText(this, "Please enter login", Toast.LENGTH_SHORT).show();
+                    } else if (password.length() <= 0) {
+                        Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+                    } else {
+                       AutorizationTask task = new AutorizationTask(this);
+                        String str = "";
+                        try {
+                            hashPass=hashText(password);
+                            task.execute(login, hashPass);
+                            str = task.get();
+                            JSONObject obj = new JSONObject(str);
+                            Log.e("Auth JSON:", str);
+                            Intent intent= new Intent(this,Order.class);
+                            intent.putExtra("LOGIN",login);
+                            intent.putExtra("PASSWORD",hashPass);
+                            startActivity(intent);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
                 break;
@@ -135,85 +176,5 @@ public class MainActivity extends AppCompatActivity {
 
         return convertByteToHex(sha512.digest());
     }
-    class SignIn extends AsyncTask<String,Void,String> {
-        private ProgressDialog pdia;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pdia=new ProgressDialog(MainActivity.this);
-            pdia.setMessage("Авторизация...");
-            pdia.show();
-        }
-
-        @Override
-        protected void onPostExecute(String strJson) {
-            super.onPostExecute(strJson);
-
-            pdia.dismiss();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            Log.e("Sign in", "in process...");
-            HttpClient client = new DefaultHttpClient();
-            HttpResponse response = null;
-            HttpPost post = new HttpPost(getString(R.string.server_url)+getString(R.string.sign_in_url));
-            post.setHeader("Accept", "application/json");
-            post.setHeader("Content-type", "application/json; charset=utf-8");
-            JSONObject object =new JSONObject();
-            try {
-                object.put("Login", params[0]);
-                object.put("Password", params[1]);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            post.setEntity(new StringEntity(object.toString(),"UTF-8"));
-            try {
-                response = client.execute(post);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException ex) {
-
-            }
-            String text = "";
-            HttpEntity entity = null;
-            if (response != null) {
-                entity = response.getEntity();
-            }
-            try {
-                text = GetText(entity.getContent());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            catch (NullPointerException e){
-                e.printStackTrace();
-                return "Wrong phone or password";
-            }
-            return text;
-        }
-    }
-
-     public String GetText(InputStream in) {
-         String text = "";
-         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-         StringBuilder sb = new StringBuilder();
-         String line = null;
-         try {
-             while ((line = reader.readLine()) != null) {
-                 sb.append(line + "\n");
-             }
-             text = sb.toString();
-         } catch (Exception ex) {
-
-         } finally {
-             try {
-
-                 in.close();
-             } catch (Exception ex) {
-             }
-         }
-         return text;
-     }
  }

@@ -5,6 +5,7 @@
     <string name="send_confirm_code_url">/api/account/register/sendConfirmCode</string>
     <string name="sign_in_url">/api/account</string>
     <string name="register_url">/api/account/register</string>
+    <string name="cost_url">/api/weborders/cost</string>
     <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
     <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
     <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>

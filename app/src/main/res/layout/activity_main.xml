@@ -26,7 +26,7 @@
         android:layout_marginTop="55dp"
         android:ems="10"
         android:hint="@string/signin_phone"
-        android:inputType="textPersonName" />
+        android:inputType="phone" />
 
     <EditText
         android:id="@+id/password_field"
@@ -66,10 +66,10 @@
     <Button
         android:id="@+id/btn_sing_in"
         android:layout_width="wrap_content"
-        android:onClick="OnClick"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@color/actionBar_color"
+        android:onClick="OnClick"
         android:text="@string/sing_in" />
 </RelativeLayout>
