@@ -37,11 +37,11 @@ public class Order extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_layout);
+       // setContentView(R.layout.order_layout);
         login=getIntent().getStringExtra("LOGIN");
         hpass=getIntent().getStringExtra("PASSWORD");
     }
-    public void OnClick(View v){
+  /*  public void OnClick(View v){
         switch (v.getId()){
             case R.id.btn_check_price:
                 CostTask task=new CostTask(this);
@@ -121,6 +121,6 @@ public class Order extends Activity {
                 break;
         }
     }
-
+*/
 
 }

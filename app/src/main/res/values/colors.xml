@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="mainyellow">#f2c925</color>
+    <color name="mainblue">#37a1d5</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="process_active">#f5da07</color>

@@ -1,58 +1,27 @@
 package com.taxi.clickcar;
 
-import android.accounts.NetworkErrorException;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.Xml;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.taxi.clickcar.Tasks.AutorizationTask;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,21 +35,90 @@ public class MainActivity extends AppCompatActivity {
     public String login="";
     public String password="";
     public String hashPass="";
+    public static boolean fl=false;
+    ViewPager pager;
+    PagerAdapter pagerAdapter;
+    public static void setFl(boolean _fl){fl=_fl;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnReg =(Button)findViewById(R.id.btn_register);
-        btnEnter=(Button)findViewById(R.id.btn_sing_in);
-        btnOrder =(Button)findViewById(R.id.btn_order);
-        sign_login=(EditText)findViewById(R.id.login_field);
-        sign_pass=(EditText)findViewById(R.id.password_field);
+        final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setBackgroundResource(R.color.mainblue);
+        tabs.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+        final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager());
+
+        final TabsPagerAdapter2 adapter2 = new TabsPagerAdapter2(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+        tabs.setupWithViewPager(pager);
+        if (fl) {
+
+           pager.setAdapter(adapter2);
+
+           tabs.setupWithViewPager(pager);
+            pager.setCurrentItem(tabs.getSelectedTabPosition()+1);
+
+        }
+        CheckConnection();
 
 
 
     }
+    public void OnClickReg(){
+        Toast.makeText(this,"reg",Toast.LENGTH_LONG).show();
+    }
+    public class TabsPagerAdapter extends FragmentPagerAdapter {
+
+        public TabsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
 
+
+        @Override
+        public Fragment getItem(int position) {
+          if(position==0)  return EnterFragment.newInstance(position);
+            else
+                    return RegFragment.newInstance(position);
+                        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position==0)  return "Вход";
+            else return "Регистрация";
+        }
+    }
+
+    public class TabsPagerAdapter2 extends FragmentPagerAdapter {
+
+        public TabsPagerAdapter2(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position==0)  return EnterFragment.newInstance(position);
+            else
+                return ConfirmFragment.newInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position==0)  return "Вход";
+            else return "Регистрация";
+        }
+    }
     public void setmOnClickListener(View.OnClickListener mOnClickListener) {
         this.mOnClickListener = mOnClickListener;
     }
@@ -106,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void OnClick(View v){
+   /* public void OnClick(View v){
         switch (v.getId()){
             case R.id.btn_order:
                 if (CheckConnection()){
@@ -158,9 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
-    public  String convertByteToHex(byte data[])
+    public  static String convertByteToHex(byte data[])
     {
         StringBuffer hexData = new StringBuffer();
         for (int byteIndex = 0; byteIndex < data.length; byteIndex++)
@@ -169,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         return hexData.toString();
     }
 
-    public String hashText(String textToHash) throws Exception
+    public static String hashText(String textToHash) throws Exception
     {
         final MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
         sha512.update(textToHash.getBytes());

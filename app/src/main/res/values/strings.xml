@@ -9,7 +9,7 @@
     <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
     <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
     <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
-    <string name="intro2small">Нажмите кнопку ЦЕНА и:\n\t-округляйте сумму;\n\t-повышайте стоимость\n для учкорения поиска в часы пик;</string>
+    <string name="intro2small">\Округляйте сумму\nПовышайте стоимость для учкорения поиска</string>
     <string name="intro3large">ЭТО КОНТРОЛЬ КАЧЕСТВА</string>
     <string name="intro3small">Оставляйте отзывы к своим поездкам,\n оценивайте работу водителя это \nпозволит улучшить качество сервиса.</string>
     <string name="btn_order_taxi">Заказать такси</string>
@@ -23,6 +23,7 @@
     <string name="pass_again">Пароль повторно</string>
     <string name="accses_reg">Подтвердить</string>
     <string name="confirm_code">Код подтверждения</string>
+    <string name="confirm">Подтвердить</string>
     <string name="sing_in">Вход</string>
     
 

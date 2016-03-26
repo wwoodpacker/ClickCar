@@ -48,13 +48,13 @@ public class ConfirmCode extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.confirm_code);
-        btn_confirm_ok =(Button)findViewById(R.id.btn_confirm_ok);
-        ed_confirm_code =(EditText)findViewById(R.id.ed_confirm_code);
+       // setContentView(R.layout.confirm_code);
+      //  btn_confirm_ok =(Button)findViewById(R.id.btn_confirm_ok);
+       // ed_confirm_code =(EditText)findViewById(R.id.ed_confirm_code);
         userRegistratonProfile = (UserRegistratonProfile)getIntent().getParcelableExtra(
                 UserRegistratonProfile.class.getCanonicalName());
     }
-
+/*
     public void OnClick(View v){
         switch (v.getId()) {
             case R.id.btn_confirm_ok:
@@ -90,5 +90,5 @@ public class ConfirmCode extends Activity {
         }
     }
 
-
+*/
 }

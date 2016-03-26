@@ -1,49 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:layout_weight="10"
-    android:id="@+id/main">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="32dp"
-
-        android:textColor="#ffffff"
-        android:paddingRight="32dp"
-
-        android:background="@drawable/logo_intro"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="@string/intro1large"
         android:textAlignment="center"
-        android:textSize="30sp"
         android:textColor="#747474"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="30sp"
+        android:id="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="64dp"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/intro1small"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:textColor="#6a6a6a"
         android:textSize="15sp"
-        android:textColor="#6a6a6a" />
-    <LinearLayout
+        android:id="@+id/textView7"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="112dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentRight="false"
+        android:textAlignment="center"  />
+
+    <ImageView
         android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/home"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imageViewHome"
+        android:layout_alignTop="@+id/imageViewLHand"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/intro1"
-        android:layout_gravity="center_horizontal">
+        android:id="@+id/imageViewLHand"
+        android:background="@drawable/left__hand"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentBottom="true" />
 
-    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewMetka"
+        android:background="@drawable/metka"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView7" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewRHand"
+        android:background="@drawable/right_hand_2"
+        android:layout_alignBottom="@+id/imageViewLHand"
+        android:layout_alignRight="@+id/textView7"
+        android:layout_alignEnd="@+id/textView7"
+        android:layout_alignTop="@+id/imageViewHome" />
+
+
+</RelativeLayout>

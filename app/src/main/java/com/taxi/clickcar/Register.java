@@ -50,15 +50,15 @@ public class Register extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
-        ed_login = (EditText)findViewById(R.id.ed_login);
-        ed_name = (EditText)findViewById(R.id.ed_name);
-        ed_phone = (EditText)findViewById(R.id.ed_phone);
-        ed_pass = (EditText)findViewById(R.id.ed_pass);
-        ed_pass_again = (EditText)findViewById(R.id.ed_pass_again);
+      //  setContentView(R.layout.register);
+      //  ed_login = (EditText)findViewById(R.id.ed_login);
+      //  ed_name = (EditText)findViewById(R.id.ed_name);
+      //  ed_phone = (EditText)findViewById(R.id.ed_phone);
+      //  ed_pass = (EditText)findViewById(R.id.ed_pass);
+      //  ed_pass_again = (EditText)findViewById(R.id.ed_pass_again);
 
     }
-
+/*
     public void OnClick(View v){
         switch (v.getId()){
             case R.id.btn_acsses_reg:
@@ -102,5 +102,5 @@ public class Register extends Activity {
                 }
              break;
         }
-    }
+    }*/
 }

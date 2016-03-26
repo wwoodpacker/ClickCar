@@ -3,73 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
         android:layout_alignParentLeft="false"
-
+        android:background="@color/mainblue"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo_intro" />
-
-    <EditText
-        android:id="@+id/login_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+         />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="false"
+        android:background="@color/mainblue"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:ems="10"
-        android:hint="@string/signin_phone"
-        android:inputType="phone" />
+        />
 
-    <EditText
-        android:id="@+id/password_field"
+    <ImageView
         android:layout_width="wrap_content"
+        android:background="@drawable/logo1"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/login_field"
-        android:layout_alignStart="@+id/login_field"
-        android:layout_alignTop="@+id/login_field"
-        android:layout_marginTop="53dp"
-        android:ems="10"
-        android:hint="@string/pass"
-        android:inputType="textPassword" />
+        android:id="@+id/imageView4"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
 
-    <Button
-        android:id="@+id/btn_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/btn_register"
-        android:background="@color/actionBar_color"
-        android:onClick="OnClick"
-        android:text="@string/btn_order_taxi" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_alignRight="@+id/imageView4"
+        android:layout_alignEnd="@+id/imageView4"
+        android:layout_marginBottom="50dp"
+        >
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="38dp"
-        android:background="@color/actionBar_color"
-        android:onClick="OnClick"
-        android:text="@string/btn_registration" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/mainblue"
+            android:id="@+id/imageView5"
+            android:layout_gravity="left|top" />
 
-    <Button
-        android:id="@+id/btn_sing_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@color/actionBar_color"
-        android:onClick="OnClick"
-        android:text="@string/sing_in" />
+        <include layout="@layout/tab_pager"
+
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        </include>
+
+    </FrameLayout>
 </RelativeLayout>
