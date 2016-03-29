@@ -56,7 +56,7 @@ public class ActivityDrawer extends ActionBarActivity{
                     }
                 })
                 .build();
-
+            selectItem(1);
     }
 
     private void selectItem(int position){
