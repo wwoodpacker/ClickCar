@@ -17,8 +17,8 @@
         android:textSize="30sp"
         android:id="@+id/textView6"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="64dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -27,13 +27,11 @@
         android:textColor="#6a6a6a"
         android:textSize="15sp"
         android:id="@+id/textView7"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="112dp"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentRight="false"
-        android:textAlignment="center"  />
+        android:textAlignment="center"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="fill_parent"
@@ -43,7 +41,7 @@
         android:layout_alignParentStart="true"
         android:id="@+id/imageViewHome"
         android:layout_alignTop="@+id/imageViewLHand"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@+id/indicator" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -53,7 +51,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView7"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@+id/indicator" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -62,17 +60,29 @@
         android:background="@drawable/metka"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView7" />
+        android:layout_above="@+id/indicator"
+        android:layout_below="@+id/textView7"
+        android:layout_marginBottom="30dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewRHand"
         android:background="@drawable/right_hand_2"
-        android:layout_alignBottom="@+id/imageViewLHand"
         android:layout_alignRight="@+id/textView7"
         android:layout_alignEnd="@+id/textView7"
-        android:layout_alignTop="@+id/imageViewHome" />
+        android:layout_alignTop="@+id/imageViewHome"
+        android:layout_above="@+id/indicator" />
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="#FFCCCCCC"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

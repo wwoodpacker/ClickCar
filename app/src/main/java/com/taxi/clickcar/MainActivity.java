@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
     public EditText sign_login;
     public EditText sign_pass;
     public View.OnClickListener mOnClickListener;
-
-    public String login="";
-    public String password="";
+    public UserRegistratonProfile userRegistratonProfile;
+    public static String name="";
+    public static String password="";
+    public static String password_again="";
+    public static String phone="";
     public String hashPass="";
     public static boolean fl=false;
     ViewPager pager;
@@ -50,15 +52,24 @@ public class MainActivity extends AppCompatActivity {
         TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager());
 
         final TabsPagerAdapter2 adapter2 = new TabsPagerAdapter2(getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        tabs.setupWithViewPager(pager);
+
         if (fl) {
 
+            userRegistratonProfile = (UserRegistratonProfile)getIntent().getParcelableExtra(
+                    UserRegistratonProfile.class.getCanonicalName());
+            name=userRegistratonProfile.name.toString();
+            password=userRegistratonProfile.pass.toString();
+            password_again=userRegistratonProfile.pass_again.toString();
+            phone=userRegistratonProfile.phone.toString();
            pager.setAdapter(adapter2);
 
            tabs.setupWithViewPager(pager);
             pager.setCurrentItem(tabs.getSelectedTabPosition()+1);
 
+        }
+        else{
+            pager.setAdapter(adapter);
+            tabs.setupWithViewPager(pager);
         }
         CheckConnection();
 

@@ -81,7 +81,7 @@ public class EnterFragment extends Fragment {
                             str = task.get();
                             JSONObject obj = new JSONObject(str);
                             Log.e("Auth JSON:", str);
-                            Intent intent = new Intent(getContext(), Order.class);
+                            Intent intent = new Intent(getContext(), ActivityDrawer.class);
                             intent.putExtra("LOGIN", login);
                             intent.putExtra("PASSWORD", hashPass);
                             startActivity(intent);

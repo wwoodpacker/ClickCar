@@ -4,10 +4,13 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:drawableLeft="@mipmap/ic_logo"
-        android:text="@string/confirm_code"
+        android:drawableLeft="@mipmap/ic_launcher"
+        android:textColor="@color/mainblack"
+        android:hint="@string/confirm_code"
+        android:textColorHint="#b1b1b1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="phone"
         android:id="@+id/edit_confirm"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp" />

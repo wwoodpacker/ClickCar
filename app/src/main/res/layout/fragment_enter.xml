@@ -4,19 +4,23 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent">
 
 <EditText
-    android:drawableLeft="@mipmap/ic_logo"
+    android:drawableLeft="@mipmap/icon_phone"
+    android:textColor="@color/mainblack"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/phone"
+    android:textColorHint="#b1b1b1"
     android:inputType="phone"
     android:ems="10"
     android:id="@+id/edit_phone" />
 
 <EditText
-    android:drawableLeft="@mipmap/ic_logo"
+    android:drawableLeft="@mipmap/icon_pass"
+    android:textColor="@color/mainblack"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/pass"
+    android:textColorHint="#b1b1b1"
     android:inputType="textPassword"
     android:ems="10"
     android:id="@+id/edit_pass" />

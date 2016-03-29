@@ -27,11 +27,13 @@ public class ThirdFragment extends Fragment {
     private static boolean isVisible = false;
     private static boolean doneVisible = false;
     ImageView image_intro3;
+    ImageView image_intro4;
     Button btn_skip;
-    View v2;
+
     int pageNumber;
 
     Animation animation1;
+    Animation animation2;
 
 
 
@@ -65,9 +67,14 @@ public class ThirdFragment extends Fragment {
         t1.setGravity(Gravity.CENTER);
         t2.setGravity(Gravity.CENTER);
         image_intro3=(ImageView)view.findViewById(R.id.imageintro3);
+        image_intro4=(ImageView)view.findViewById(R.id.imageintro33);
+
+
         image_intro3.setVisibility(View.GONE);
+        image_intro4.setVisibility(View.GONE);
         btn_skip.setVisibility(View.GONE);
         animation1 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_lefthand2);
+        animation2 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_righthand1);
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,12 +86,18 @@ public class ThirdFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     private void setViewAnimation(){
         image_intro3.setVisibility(View.VISIBLE);
+        image_intro4.setVisibility(View.VISIBLE);
         btn_skip.setVisibility(View.VISIBLE);
 
         image_intro3.setAnimation(animation1);
+        image_intro4.setAnimation(animation2);
 
     }
 

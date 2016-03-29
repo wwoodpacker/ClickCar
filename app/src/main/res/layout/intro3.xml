@@ -11,41 +11,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/textView6"
-        android:textAlignment="center"
         android:text="@string/intro3large"
-        android:textColor="#747474"
+        android:textAlignment="center"
+
         android:textSize="30sp"
-        android:layout_marginTop="64dp" />
+        android:id="@+id/textView6"
+        android:paddingTop="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/textView7"
-        android:textAlignment="center"
         android:text="@string/intro3small"
-        android:textColor="#6a6a6a"
+
         android:textSize="15sp"
+        android:id="@+id/textView7"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
         android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/intro3"
+        android:background="@drawable/pages_intro3"
         android:id="@+id/imageintro3"
         android:layout_above="@+id/btn_main"
-        android:layout_below="@+id/textView7" />
+        android:layout_alignTop="@+id/imageintro33" />
 
     <Button
         android:id="@+id/btn_main"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/mainyellow"
-        android:text="Skip"
+        android:text="Готово"
         android:typeface="sans"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/hand_intro3"
+        android:id="@+id/imageintro33"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/btn_main"
+        android:layout_below="@+id/textView7" />
+
 </RelativeLayout>

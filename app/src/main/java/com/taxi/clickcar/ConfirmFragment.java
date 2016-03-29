@@ -1,6 +1,7 @@
 package com.taxi.clickcar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +16,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.taxi.clickcar.Tasks.RegisterTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Назар on 25.03.2016.
@@ -23,7 +32,7 @@ public class ConfirmFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     public View.OnClickListener mOnClickListener;
-
+    public String confirm_code;
     static ConfirmFragment newInstance(int page) {
         ConfirmFragment confirmFragment = new ConfirmFragment();
         Bundle arguments = new Bundle();
@@ -52,6 +61,40 @@ public class ConfirmFragment extends Fragment {
         Button btn1 = (Button) view.findViewById(R.id.btn_confirm);
         final EditText confirm = (EditText) view.findViewById(R.id.edit_confirm);
 
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirm_code=confirm.getText().toString();
+                if (confirm_code.isEmpty()){
+                    Toast.makeText(getContext(),"Please enter confirm code",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    RegisterTask registerTask=new RegisterTask(getContext());
+                    registerTask.execute(MainActivity.phone,
+                            confirm_code,
+                            MainActivity.password,
+                            MainActivity.password_again,
+                            MainActivity.name);
+                    try {
+                        String jsonStr=registerTask.get();
+                        Log.e("REGISTER JSON", jsonStr);
+                        JSONObject object = new JSONObject(jsonStr);
+                        Toast.makeText(getContext(),object.getString("Message"),Toast.LENGTH_SHORT).show();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(),"Пользователь зарегистрирован",Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(getContext(),MainActivity.class);
+                        MainActivity.setFl(false);
+                        startActivity(intent);
+                    }
+                    ;
+                }
+            }
+        });
 
         return view;
 

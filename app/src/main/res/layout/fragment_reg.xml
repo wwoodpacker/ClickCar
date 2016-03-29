@@ -3,12 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
-        android:drawableLeft="@mipmap/ic_logo"
-
+        android:drawableLeft="@mipmap/icon_person"
+        android:textColor="@color/mainblack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="@string/name"
+        android:textColorHint="#b1b1b1"
         android:ems="10"
         android:id="@+id/editText3"
         android:layout_alignParentTop="true"
@@ -16,11 +17,13 @@
         android:layout_alignParentEnd="true" />
 
     <EditText
-        android:drawableLeft="@mipmap/ic_logo"
+        android:drawableLeft="@mipmap/icon_phone"
+        android:textColor="@color/mainblack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        android:hint="@string/phone"
+        android:hint="@string/signin_phone"
+        android:textColorHint="#b1b1b1"
         android:ems="10"
         android:id="@+id/editText4"
         android:layout_below="@+id/editText3"
@@ -28,11 +31,13 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:drawableLeft="@mipmap/ic_logo"
+        android:drawableLeft="@mipmap/icon_pass"
+        android:textColor="@color/mainblack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="@string/pass"
+        android:textColorHint="#b1b1b1"
         android:ems="10"
         android:id="@+id/editText5"
         android:layout_below="@+id/editText4"
@@ -40,11 +45,13 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:drawableLeft="@mipmap/ic_logo"
+        android:drawableLeft="@mipmap/icon_pass"
+        android:textColor="@color/mainblack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="@string/pass_again"
+        android:textColorHint="#b1b1b1"
         android:ems="10"
         android:id="@+id/editText6"
         android:layout_below="@+id/editText5"

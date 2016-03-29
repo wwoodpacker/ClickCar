@@ -7,15 +7,15 @@ import android.os.Parcelable;
  * Created by Назар on 19.03.2016.
  */
 public class UserRegistratonProfile implements Parcelable {
-    public String login;
+
     public String name;
     public String phone;
     public String confirm_code;
     public String pass;
     public String pass_again;
     public UserRegistratonProfile(){};
-    public UserRegistratonProfile(String _login,String _name,String _phone,String _pass,String _pass_again){
-        login=_login;
+    public UserRegistratonProfile(String _name,String _phone,String _pass,String _pass_again){
+
         name=_name;
         phone=_phone;
         pass=_pass;
@@ -30,7 +30,7 @@ public class UserRegistratonProfile implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(login);
+
         dest.writeString(name);
         dest.writeString(phone);
         dest.writeString(pass);
@@ -53,7 +53,7 @@ public class UserRegistratonProfile implements Parcelable {
     };
 
      private UserRegistratonProfile(Parcel parcel){
-         login=parcel.readString();
+
          name=parcel.readString();
          phone=parcel.readString();
          pass=parcel.readString();
