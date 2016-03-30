@@ -1,6 +1,7 @@
 package com.taxi.clickcar;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,15 +27,28 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  * Created by Назар on 27.03.2016.
  */
 public class ActivityDrawer extends ActionBarActivity{
+    static String LOGIN="";
+    static String PASSWORD="";
+    private String credentials;
+    public static String base64EncodedCredentials ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        LOGIN=getIntent().getStringExtra("LOGIN");
+        PASSWORD=getIntent().getStringExtra("PASSWORD");
+        credentials=LOGIN+":"+PASSWORD;
+        base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.mainyellow));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("");
+        toolbar.bringToFront();
+        //toolbar.getBackground().setAlpha(0);
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.mainyellow));
+       setSupportActionBar(toolbar);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        Drawer drawer= new Drawer();
 
                  drawer.withActivity(this)

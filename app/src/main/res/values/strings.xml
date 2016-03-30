@@ -5,6 +5,7 @@
     <string name="action_settings"></string>
     <string name="api_key">AIzaSyAmopzBoSZWSwFoliJNTeAl7iOLnDf5mu8</string>
     <string name="server_url">http://176.38.246.10:7200</string>
+    <string name="search_geo_coord">/api/geodata/search?</string>
     <string name="send_confirm_code_url">/api/account/register/sendConfirmCode</string>
     <string name="sign_in_url">/api/account</string>
     <string name="register_url">/api/account/register</string>
