@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 public class AutorizationTask extends AsyncTask<String,Void,String> {
 
     private SimpleArcDialog mDialog;
+    private ProgressDialog mPdialog;
     private Context mContext;
     public AutorizationTask(Context context){
         mContext=context;
@@ -39,19 +40,24 @@ public class AutorizationTask extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mDialog = new SimpleArcDialog(mContext);
+      /*  mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
         configuration.setText("Авторизация...");
+        configuration.setAnimationSpeed(1);
         mDialog.setConfiguration(configuration);
-        mDialog.show();
+
+        mDialog.show();*/
+        mPdialog = new ProgressDialog(mContext);
+        mPdialog.setMessage("sd");
+        mPdialog.show();
     }
 
     @Override
     protected void onPostExecute(String strJson) {
         super.onPostExecute(strJson);
-        mDialog.dismiss();
-       // pdia.dismiss();
+        //mDialog.dismiss();
+       mPdialog.dismiss();
     }
 
     @Override

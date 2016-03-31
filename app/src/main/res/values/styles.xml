@@ -31,15 +31,16 @@
     </style>
 
     <!--ActionBar Register style-->
-    <style name="drawertheme" parent="AppTheme.NoActionBar">
-        <item name="android:itemBackground">@color/mainblue</item>
+    <style name="drawertheme">
+        
+        <item name="android:textSize">20sp</item>
 
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
+        
         <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>

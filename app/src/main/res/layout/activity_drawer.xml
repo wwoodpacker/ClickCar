@@ -19,6 +19,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemTextColor="@color/white"
+        app:theme="@style/drawertheme"
+        app:itemIconTint="@color/white"
         app:itemBackground="@color/mainblue"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"

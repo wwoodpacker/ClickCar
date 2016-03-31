@@ -74,6 +74,7 @@ public class ActivityDrawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         View header = navigationView.getHeaderView(0);
         TextView text_name=(TextView) header.findViewById(R.id.text_name);
         if (Name!="")  text_name.setText(Name);
