@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="mainyellow">#FFAB00</color>
-    <color name="mainblue">#0091EA</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="mainblue">#0091ea</color>
+    <color name="white">#ffffff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="maingrey">#8d8d8d</color>
     <color name="mainblack">#FF000000</color>
@@ -11,4 +11,9 @@
     <color name="process_active">#f5da07</color>
     <color name="process_notactive">#dcdcdc</color>
     <color name="actionBar_color">#FFFBBE1C</color>
+
+    <color name="list_background">#0091EA</color>
+    <color name="list_background_pressed">#FF87C5EA</color>
+    <color name="drawer_item_color">#0091EA</color>
+    <color name="list_divider">#5e5e5e</color>
 </resources>

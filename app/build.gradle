@@ -16,7 +16,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -41,4 +41,5 @@ dependencies {
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.github.arimorty:floatingsearchview:1.1.2'
 }

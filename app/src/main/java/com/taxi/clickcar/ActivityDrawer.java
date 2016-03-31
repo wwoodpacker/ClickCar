@@ -1,19 +1,30 @@
 package com.taxi.clickcar;
 
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
@@ -26,84 +37,88 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 /**
  * Created by Назар on 27.03.2016.
  */
-public class ActivityDrawer extends ActionBarActivity{
+public class ActivityDrawer extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
     static String LOGIN="";
+    public static String Name="";
     static String PASSWORD="";
     private String credentials;
     public static String base64EncodedCredentials ;
+
+    FragmentMap fmap;
+    FragmentHistory fhistory;
+    FragmentMassages fmassages;
+    FragmentSettings fsettings;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        toolbar.bringToFront();
+
+
 
         LOGIN=getIntent().getStringExtra("LOGIN");
         PASSWORD=getIntent().getStringExtra("PASSWORD");
         credentials=LOGIN+":"+PASSWORD;
         base64EncodedCredentials = Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
-        // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        toolbar.bringToFront();
-        //toolbar.getBackground().setAlpha(0);
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.mainyellow));
-       setSupportActionBar(toolbar);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       Drawer drawer= new Drawer();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-                 drawer.withActivity(this)
-                .withToolbar(toolbar)
-                .withActionBarDrawerToggle(true)
-                .withHeader(R.layout.drawer_header)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("1").withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_book).withIdentifier(3),
-                        new SectionDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                        new DividerDrawerItem()
-                        )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        selectItem(position);
-                    }
-                })
-                .build();
-            selectItem(1);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView text_name=(TextView) header.findViewById(R.id.text_name);
+        if (Name!="")  text_name.setText(Name);
+        fmap = new FragmentMap();
+        fsettings = new FragmentSettings();
+        fmassages = new FragmentMassages();
+        fhistory = new FragmentHistory();
+        FragmentManager ftrans = getSupportFragmentManager();
+        ftrans.beginTransaction().replace(R.id.container, fmap).commit();
     }
 
-    private void selectItem(int position){
-        Fragment fragment=null;
-        switch (position){
-            case 1:
-                fragment=new FragmentMap();
-                break;
-            case 2:
-                fragment=new FragmentHistory();
-                break;
-            case 3:
-                fragment=new FragmentMassages();
-                break;
-            case 4:
-                fragment=new FragmentSettings();
-                break;
-            default:break;
-        }
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment).commit();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-            // Highlight the selected item, update the title, and close the drawer
-           // mDrawerList.setItemChecked(position, true);
-            //setTitle(mScreenTitles[position]);
-            //mDrawerLayout.closeDrawer(mDrawerList);
+        FragmentManager ftrans = getSupportFragmentManager();
+
+        if (id == R.id.nav_map) {
+            ftrans.beginTransaction().replace(R.id.container, fmap).commit();
+        } else if (id == R.id.nav_history) {
+            ftrans.beginTransaction().replace(R.id.container, fhistory).commit();
+
+        } else if (id == R.id.nav_massages) {
+            ftrans.beginTransaction().replace(R.id.container, fmassages).commit();
+
+        } else if (id == R.id.nav_settings) {
+            ftrans.beginTransaction().replace(R.id.container, fsettings).commit();
+        }
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+
+        return true;
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
-            // Error
-            Log.e(this.getClass().getName(), "Error. Fragment is not created");
+            super.onBackPressed();
         }
-
     }
+
+
 }

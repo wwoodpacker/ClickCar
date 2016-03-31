@@ -30,11 +30,19 @@
     <string name="confirm">Подтвердить</string>
     <string name="sing_in">Вход</string>
 
-    <string name="drawer_item_home">Заказ</string>
-    <string name="drawer_item_free_play">История</string>
-    <string name="drawer_item_custom">Сообщения</string>
+    <string name="drawer_item_map">Заказ</string>
+    <string name="drawer_item_history">История</string>
+    <string name="drawer_item_massages">Сообщения</string>
     <string name="drawer_item_settings">Настройки</string>
-    <string name="drawer_item_help">Выход</string>
+    <string name="drawer_item_exit">Выход</string>
     <string name="title_activity_maps">Map</string>
+
+    <string-array name="views_array">
+        <item>Заказ</item>
+        <item>История</item>
+        <item>Сообщения</item>
+        <item>Настройки</item>
+        <item>Выход</item>
+    </string-array>
 
 </resources>

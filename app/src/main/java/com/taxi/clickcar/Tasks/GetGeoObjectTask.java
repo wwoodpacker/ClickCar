@@ -14,6 +14,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +61,29 @@ public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        JSONObject dataJsonObj = null;
+        String streetname = "";
+        String housename = "";
+
+        try {
+            dataJsonObj = new JSONObject(text);
+            JSONObject geo_streets = dataJsonObj.getJSONObject("geo_streets");
+            JSONArray geo_street = geo_streets.getJSONArray("geo_street");
+            // 1. достаем инфо о втором друге - индекс 1
+            JSONObject name = geo_street.getJSONObject(0);
+            streetname = name.getString("name");
+            // Log.d(LOG_TAG, "Второе имя: " + secondName);
+            JSONArray houses = name.getJSONArray("houses");
+            JSONObject house= houses.getJSONObject(0);
+            housename = house.getString("house");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        text="";
+        text=streetname+" "+housename;
         return text;
+
     }
     public String GetText(InputStream in) {
         String text = "";
@@ -79,6 +104,15 @@ public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
             } catch (Exception ex) {
             }
         }
+
         return text;
     }
-}
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+    }
+    }
+
+

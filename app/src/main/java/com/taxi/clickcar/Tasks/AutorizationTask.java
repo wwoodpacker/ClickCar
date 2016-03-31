@@ -8,6 +8,7 @@ import android.util.Log;
 import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
+import com.taxi.clickcar.ActivityDrawer;
 import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
 
@@ -91,6 +92,15 @@ public class AutorizationTask extends AsyncTask<String,Void,String> {
         catch (NullPointerException e){
             e.printStackTrace();
             return "Wrong phone or password";
+        }
+
+        JSONObject dataJsonObj = null;
+        try {
+            dataJsonObj = new JSONObject(text);
+            dataJsonObj.getString("user_full_name");
+            ActivityDrawer.Name=dataJsonObj.getString("user_full_name").toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return text;
     }

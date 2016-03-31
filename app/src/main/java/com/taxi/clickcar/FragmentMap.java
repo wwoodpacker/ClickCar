@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,6 +51,7 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private Button btn_zakaz;
+    FloatingSearchView searchView;
 
     public FragmentMap() {
     }
@@ -61,12 +63,41 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         Log.e("FragmentMap", "onCreateView");
+        searchView=(FloatingSearchView )view.findViewById(R.id.floating_search_view);
 
+        //search.setDrawerLogo();
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         btn_zakaz=(Button)view.findViewById(R.id.btn_zakaz);
+        searchView.bringToFront();
+        searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+
+                searchView.showProgress();
+            }
+
+        });
+
+        searchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
+            @Override
+            public void onFocus() {
+
+                //show suggestions when search bar gains focus (typically history suggestions)
+
+
+                Log.d("search", "onFocus()");
+            }
+
+            @Override
+            public void onFocusCleared() {
+
+                Log.d("search", "onFocusCleared()");
+            }
+        });
+
         return view;
     }
 
@@ -99,6 +130,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+                searchView.setSearchText(otvet.toString());
                 Log.e("Json Camera",otvet.toString());
             }
         });
