@@ -50,6 +50,7 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  */
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
+    private GetGeoObjectTask task;
     private Button btn_zakaz;
     FloatingSearchView searchView;
 
@@ -121,7 +122,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onCameraChange(CameraPosition camera) {
                 Log.d("FragmentMap", "onCameraChange: " + camera.target.latitude + "," + camera.target.longitude);
                 String otvet="";
-               GetGeoObjectTask task=new GetGeoObjectTask(getContext());
+
+                task=new GetGeoObjectTask(getContext());
                 task.execute(String.valueOf(camera.target.latitude),String.valueOf(camera.target.longitude));
                 try {
                     otvet=task.get();
@@ -130,6 +132,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+
                 searchView.setSearchText(otvet.toString());
                 Log.e("Json Camera",otvet.toString());
             }

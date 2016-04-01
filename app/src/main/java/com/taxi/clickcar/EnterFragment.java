@@ -1,5 +1,6 @@
 package com.taxi.clickcar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,6 +33,10 @@ public class EnterFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     public View.OnClickListener mOnClickListener;
+    public  String str;
+    private AutorizationTask task;
+    public String hashPass = "";
+    public String login="";
 
     static EnterFragment newInstance(int page) {
         EnterFragment enterFragment = new EnterFragment();
@@ -46,6 +51,7 @@ public class EnterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -57,15 +63,37 @@ public class EnterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("enter", "oncreateview");
-        View view = inflater.inflate(R.layout.fragment_enter, null);
+        final View view = inflater.inflate(R.layout.fragment_enter, null);
         Button btn1 = (Button) view.findViewById(R.id.btn_enter);
         final EditText sign_login = (EditText) view.findViewById(R.id.edit_phone);
         final EditText sign_pass = (EditText) view.findViewById(R.id.edit_pass);
+
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                task = new AutorizationTask(new MyCallBack() {
+                    @Override
+                    public void OnTaskDone(String result) {
+                        Log.e("OntaskDone",result);
+                        str=result;
+                        try {
+                            JSONObject obj = new JSONObject(str);
+                            Log.e("Auth JSON:", str);
+                            Intent intent = new Intent(getContext(), ActivityDrawer.class);
+                            intent.putExtra("LOGIN", login);
+                            intent.putExtra("PASSWORD", hashPass);
+
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
                 if (CheckConnection()) {
-                    String login = sign_login.getText().toString();
+                     login = sign_login.getText().toString();
                     String password = sign_pass.getText().toString();
 
                     if (login.length() <= 0) {
@@ -73,28 +101,15 @@ public class EnterFragment extends Fragment {
                     } else if (password.length() <= 0) {
                         Toast.makeText(getContext(), "Please enter password", Toast.LENGTH_SHORT).show();
                     } else {
-                        AutorizationTask task = new AutorizationTask(getContext());
-                        String str = "";
+                        task.setcon(getContext());
+
                         try {
-                            String hashPass = MainActivity.hashText(password);
-                            task.execute(login, hashPass);
-                            str = task.get();
-                            JSONObject obj = new JSONObject(str);
-                            Log.e("Auth JSON:", str);
-                            Intent intent = new Intent(getContext(), ActivityDrawer.class);
-                            intent.putExtra("LOGIN", login);
-                            intent.putExtra("PASSWORD", hashPass);
-                            startActivity(intent);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+                            hashPass = MainActivity.hashText(password);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        task.execute(login, hashPass);
+
 
                     }
                 }
@@ -125,4 +140,6 @@ public class EnterFragment extends Fragment {
         }
 
     }
+
+
 }

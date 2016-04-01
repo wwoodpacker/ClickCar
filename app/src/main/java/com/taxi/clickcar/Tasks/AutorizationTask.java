@@ -1,6 +1,5 @@
 package com.taxi.clickcar.Tasks;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,7 +8,8 @@ import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.ActivityDrawer;
-import com.taxi.clickcar.MainActivity;
+import com.taxi.clickcar.EnterFragment;
+import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
 import org.apache.http.HttpEntity;
@@ -29,40 +29,44 @@ import java.io.InputStreamReader;
 /**
  * Created by Назар on 12.03.2016.
  */
-public class AutorizationTask extends AsyncTask<String,Void,String> {
+public class AutorizationTask extends AsyncTask<String,String,String> {
 
     private SimpleArcDialog mDialog;
-    private ProgressDialog mPdialog;
+    MyCallBack myCallBack;
     private Context mContext;
-    public AutorizationTask(Context context){
-        mContext=context;
-    }
+
+    public void setcon(Context con){mContext=con;};
+    public AutorizationTask(MyCallBack callBack){
+        myCallBack=callBack;
+            }
     @Override
     protected void onPreExecute() {
-        super.onPreExecute();
-      /*  mDialog = new SimpleArcDialog(mContext);
+       // super.onPreExecute();
+        mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Авторизация...");
-        configuration.setAnimationSpeed(1);
+        configuration.setText("Авторизация");
+
         mDialog.setConfiguration(configuration);
 
-        mDialog.show();*/
-        mPdialog = new ProgressDialog(mContext);
-        mPdialog.setMessage("sd");
-        mPdialog.show();
+        mDialog.show();
+
+
     }
 
     @Override
     protected void onPostExecute(String strJson) {
-        super.onPostExecute(strJson);
-        //mDialog.dismiss();
-       mPdialog.dismiss();
+        Log.e("post",strJson);
+        myCallBack.OnTaskDone(strJson);
+        mDialog.dismiss();
+
+
     }
 
     @Override
     protected String doInBackground(String... params) {
         Log.e("Sign in", "in process...");
+
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
         HttpPost post = new HttpPost(mContext.getString(R.string.server_url)+mContext.getString(R.string.sign_in_url));
@@ -92,6 +96,7 @@ public class AutorizationTask extends AsyncTask<String,Void,String> {
         }
         try {
             text = GetText(entity.getContent());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,8 +113,10 @@ public class AutorizationTask extends AsyncTask<String,Void,String> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return text;
     }
+
 
     public String GetText(InputStream in) {
         String text = "";
