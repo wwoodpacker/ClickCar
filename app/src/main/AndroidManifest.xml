@@ -4,6 +4,7 @@
     <permission android:name="com.taxi.clickcar.MAPS_RESIVE"
         android:protectionLevel="signature"
         />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.taxi.clickcar.MAPS_RESIVE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

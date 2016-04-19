@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
 import org.apache.http.HttpEntity;
@@ -29,9 +30,11 @@ import java.io.InputStreamReader;
 public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
 
     private Context mContext;
+    MyCallBack myCallBack;
     private String base_aouth="";
-    public GetGeoObjectTask(Context context){
-        mContext=context;
+    public void setContext(Context context){mContext=context;}
+    public GetGeoObjectTask(MyCallBack callBack){
+        myCallBack=callBack;
     }
     @Override
     protected String doInBackground(String... params) {
@@ -110,7 +113,7 @@ public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+        myCallBack.OnTaskDone(s);
 
     }
     }
