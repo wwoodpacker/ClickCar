@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" android:id="@+id/g1"></group>
+    <group android:checkableBehavior="single"  android:id="@+id/g2">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@mipmap/icon_zakaz"
+            android:title="@string/drawer_item_map" />
+     </group>
+    <group android:checkableBehavior="single" android:id="@+id/g3">
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@mipmap/iconc_history"
+            android:title="@string/drawer_item_history" />
+    </group>
+    <group android:checkableBehavior="single"  android:id="@+id/g4">
+        <item
+            android:id="@+id/nav_massages"
+            android:icon="@mipmap/icon_masages"
+            android:title="@string/drawer_item_massages" />
+    </group>
+    <group android:checkableBehavior="single"  android:id="@+id/g5">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/icon_settings"
+            android:title="@string/drawer_item_settings" />
+    </group>
+    <group android:checkableBehavior="single"  android:id="@+id/g6">
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@mipmap/icon_exit"
+            android:title="@string/drawer_item_exit" />
+    </group>
+
+
+
+</menu>

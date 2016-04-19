@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.example.pickerclickcar.date.DatePickerDialog;
+
 import com.example.pickerclickcar.time.RadialPickerLayout;
 import com.example.pickerclickcar.time.TimePickerDialog;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -94,6 +94,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             }
         });
         searchView.bringToFront();
+       // searchView.br
         searchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
