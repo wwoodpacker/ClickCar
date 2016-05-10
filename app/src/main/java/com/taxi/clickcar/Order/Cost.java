@@ -25,11 +25,11 @@ public class Cost {
 
     public void setClientSubCard(Object client_sub_card) { this.client_sub_card = client_sub_card; }
 
-    private Object required_time;
+    private String required_time;
 
-    public Object getRequiredTime() { return this.required_time; }
+    public String getRequiredTime() { return this.required_time; }
 
-    public void setRequiredTime(Object required_time) { this.required_time = required_time; }
+    public void setRequiredTime(String required_time) { this.required_time = required_time; }
 
     private boolean reservation;
 

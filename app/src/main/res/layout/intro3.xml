@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/intro3large"
         android:textAlignment="center"
-
+        android:textColor="#747474"
         android:textSize="30sp"
         android:id="@+id/textView6"
         android:paddingTop="12dp"
@@ -25,7 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/intro3small"
-
+        android:textColor="#6a6a6a"
         android:textSize="15sp"
         android:id="@+id/textView7"
         android:layout_gravity="center_horizontal"

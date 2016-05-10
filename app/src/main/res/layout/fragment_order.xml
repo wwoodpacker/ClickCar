@@ -1,16 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:transitionGroup="true"
+    android:touchscreenBlocksFocus="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@mipmap/icon_strelka"
+        android:id="@+id/imageView13"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="100dp"
-        android:layout_marginEnd="100dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:progress="0"
+        android:max="150"
+        android:progressDrawable="@drawable/styled_process"
+        android:thumb="@mipmap/slider"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:longClickable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/mainblue"
+        android:text="0"
+        android:id="@+id/text_cost"
+        android:layout_below="@+id/imageView13"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Добавить к стоимости"
+        android:textColor="@color/mainblue"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/text_cost"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon_ua"
+        android:id="@+id/imageView14"
+        android:layout_toRightOf="@+id/text_cost"
+        android:layout_toEndOf="@+id/text_cost"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/text_cost" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0 грн"
+        android:textColor="@color/maingrey"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/seekBar"
+        android:layout_alignLeft="@+id/seekBar"
+        android:layout_alignStart="@+id/seekBar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/maingrey"
+        android:text="150грн"
+        android:id="@+id/textView4"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toLeftOf="@+id/imageView13"
+        android:layout_toStartOf="@+id/imageView13" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/mainyellow"
+        android:text="Заказать такси"
+        android:id="@+id/btn_zakaz"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Время подачи"
+        android:id="@+id/btn_date"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="5dp"
+        android:textColor="@color/white"
+        android:background="@color/mainyellow"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Класс авто"
+        android:id="@+id/btn_class"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="5dp"
+        android:textColor="@color/white"
+        android:background="@color/mainyellow"
+        android:layout_below="@+id/btn_date"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp" />
+    <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Доп.требования"
+    android:id="@+id/btn_dop"
+    android:gravity="left|center_vertical"
+    android:paddingLeft="5dp"
+    android:textColor="@color/white"
+    android:background="@color/mainyellow"
+    android:layout_below="@+id/btn_class"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тип оплаты"
+        android:id="@+id/btn_toplat"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="5dp"
+        android:textColor="@color/white"
+        android:background="@color/mainyellow"
+        android:layout_below="@+id/btn_dop"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>

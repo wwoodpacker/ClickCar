@@ -97,7 +97,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_map, container, false);
+         view = inflater.inflate(R.layout.fragment_map,null);
         Log.e("FragmentMap", "onCreateView");
         flag_add1 = false;flag_add2=false;flag_add3=false;flag_add4=false;
         gson=new Gson();
@@ -163,13 +163,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 cost.setUserPhone(ActivityDrawer.Phone);
                 cost.setReservation(false);
                 cost.setTaxiColumnId(0);
+                if (routes.size()>1) cost.setRouteUndefined(true);
                 cost.setRoute(routes);
-               // container.removeAllViews();
+
+                Gson gson=new Gson();
+                String jsonCost = gson.toJson(cost);
+
+                Bundle bundle=new Bundle();
+                bundle.putString("COSTJSON",jsonCost);
+
                 FragmentOrder fragmentOrder=new FragmentOrder();
+                fragmentOrder.setArguments(bundle);
+
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.addToBackStack("back");
+
                 fragmentTransaction.replace(R.id.container,fragmentOrder);
+                //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
             }
