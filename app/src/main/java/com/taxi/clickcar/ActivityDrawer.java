@@ -39,8 +39,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  */
 public class ActivityDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
-    static String LOGIN="";
+   public static String LOGIN="";
     public static String Name="";
+    public static String Phone="";
     static String PASSWORD="";
     private String credentials;
     public static String base64EncodedCredentials ;

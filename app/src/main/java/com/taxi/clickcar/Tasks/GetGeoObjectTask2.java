@@ -1,14 +1,9 @@
 package com.taxi.clickcar.Tasks;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 
-import com.leo.simplearcloader.ArcConfiguration;
-import com.leo.simplearcloader.SimpleArcDialog;
-import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.ActivityDrawer;
 import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
@@ -17,8 +12,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,49 +23,29 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by Назар on 20.03.2016.
+ * Created by Назар on 22.04.2016.
  */
-public class CostTask  extends AsyncTask<String,Void,String> {
-    private SimpleArcDialog mDialog;
+public class GetGeoObjectTask2 extends AsyncTask<String,Void,String> {
+
     private Context mContext;
     MyCallBack myCallBack;
     private String base_aouth="";
     public void setContext(Context context){mContext=context;}
-    public CostTask(MyCallBack callBack){
+    public GetGeoObjectTask2(MyCallBack callBack){
         myCallBack=callBack;
     }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        mDialog = new SimpleArcDialog(mContext);
-        ArcConfiguration configuration = new ArcConfiguration(mContext);
-        configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Расчёт заказа...");
-        mDialog.setConfiguration(configuration);
-        mDialog.show();
-
-    }
-
-    @Override
-    protected void onPostExecute(String strJson) {
-        myCallBack.OnTaskDone(strJson);
-
-        mDialog.dismiss();
-    }
-
     @Override
     protected String doInBackground(String... params) {
-        Log.e("Calculation COST", "Start...");
-
+        Log.e("GetGeoLatLong by words", "in process...");
         base_aouth = ActivityDrawer.base64EncodedCredentials;
+        String word = params[0].toString();
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
-        HttpPost post = new HttpPost(mContext.getString(R.string.server_url) + mContext.getString(R.string.cost_url));
+        HttpGet post = new HttpGet(mContext.getString(R.string.server_url) + mContext.getString(R.string.search_geo_coord) + "q=" + word + "&offset=0&limit=10&transliteration=true&qwertySwitcher=true");
         post.setHeader("Accept", "application/json");
         post.setHeader("Content-type", "application/json; charset=utf-8");
         post.setHeader("Authorization", "Basic " + base_aouth);
-        post.setEntity(new StringEntity(params[0].toString(),"UTF-8"));
+
         try {
             response = client.execute(post);
         } catch (IOException e) {
@@ -85,14 +58,13 @@ public class CostTask  extends AsyncTask<String,Void,String> {
         }
         try {
             text = GetText(entity.getContent());
+            Log.e("geo2text",text);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return text;
-    }
 
+    }
     public String GetText(InputStream in) {
         String text = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -112,6 +84,15 @@ public class CostTask  extends AsyncTask<String,Void,String> {
             } catch (Exception ex) {
             }
         }
+
         return text;
     }
+
+    @Override
+    protected void onPostExecute(String s) {
+        myCallBack.OnTaskDone(s);
+
+    }
 }
+
+

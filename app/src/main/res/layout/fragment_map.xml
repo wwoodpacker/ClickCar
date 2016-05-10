@@ -10,7 +10,7 @@
     <com.example.searchviewclickcar.FloatingSearchView
         android:id="@+id/floating_search_view"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:floatingSearch_searchBarMarginLeft="1dp"
         app:floatingSearch_searchBarMarginTop="1dp"
         app:floatingSearch_searchBarMarginRight="1dp"
@@ -28,7 +28,7 @@
     <com.example.searchviewclickcar.FloatingSearchView
         android:id="@+id/floating_search_view2"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:floatingSearch_searchBarMarginLeft="1dp"
         app:floatingSearch_searchBarMarginTop="1dp"
@@ -49,7 +49,7 @@
     <com.example.searchviewclickcar.FloatingSearchView
         android:id="@+id/floating_search_view3"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:floatingSearch_searchBarMarginLeft="1dp"
         app:floatingSearch_searchBarMarginTop="1dp"
@@ -70,7 +70,7 @@
     <com.example.searchviewclickcar.FloatingSearchView
         android:id="@+id/floating_search_view4"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:floatingSearch_searchBarMarginLeft="1dp"
         app:floatingSearch_searchBarMarginTop="1dp"
         app:floatingSearch_searchBarMarginRight="1dp"

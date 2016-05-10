@@ -108,8 +108,9 @@ public class AutorizationTask extends AsyncTask<String,String,String> {
         JSONObject dataJsonObj = null;
         try {
             dataJsonObj = new JSONObject(text);
-            dataJsonObj.getString("user_full_name");
+            //dataJsonObj.getString("user_full_name");
             ActivityDrawer.Name=dataJsonObj.getString("user_full_name").toString();
+            ActivityDrawer.Phone=dataJsonObj.getString("user_phone").toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
