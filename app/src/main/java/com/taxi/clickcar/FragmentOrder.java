@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.example.pickerclickcar.time.RadialPickerLayout;
 import com.example.pickerclickcar.time.TimePickerDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.taxi.clickcar.Dialogs.CarClassDialog;
 import com.taxi.clickcar.Order.Cost;
 import com.taxi.clickcar.Tasks.CostTask;
 
@@ -32,11 +34,13 @@ import java.util.Calendar;
  */
 public class FragmentOrder extends Fragment {
     private CostTask costTask;
-    public ImageView btn_back;
-    public Button btn_date,btn_zakaz;
+    public ImageView btn_back,img_carClass;
+    public Button btn_date,btn_zakaz,btn_car;
+    public EditText ed_comment=null;
     public TextView textCost;
     private Cost cost_object=null;
     public TimePickerDialog.OnTimeSetListener onTimeSetListener=null;
+    public CarClassDialog.OnCarDialogListener onCarDialogListener=null;
     public SeekBar cost_add;
     public String cost="";
     private Calendar calendar;
@@ -55,14 +59,18 @@ public class FragmentOrder extends Fragment {
         View view=inflater.inflate(R.layout.fragment_order,null);
         calendar = Calendar.getInstance();
         cost_object = new Cost();
+        ed_comment=(EditText)view.findViewById(R.id.editcomment);
         btn_back= (ImageView)view.findViewById(R.id.imageView13);
+        img_carClass=(ImageView)view.findViewById(R.id.imageClass);
         btn_zakaz=(Button)view.findViewById(R.id.btn_zakaz);
+        btn_car=(Button)view.findViewById(R.id.btn_class);
         textCost = (TextView)view.findViewById(R.id.text_cost);
         cost_add =(SeekBar)view.findViewById(R.id.seekBar);
         btn_date=(Button)view.findViewById(R.id.btn_date);
         Bundle bundle= this.getArguments();
 
         Log.e("FragmentOrder", "onCreateView");
+        //----------------------------------------------------------------------------------------------------
         costTask=new CostTask(new MyCallBack() {
             @Override
             public void OnTaskDone(String result) {
@@ -83,7 +91,7 @@ public class FragmentOrder extends Fragment {
         cost_object= gson.fromJson(bundle.getString("COSTJSON"), Cost.class);
         Log.e("CoastRequest:",bundle.getString("COSTJSON"));
         costTask.execute(bundle.getString("COSTJSON"));
-
+        //----------------------------------------------------------------------------------------------------
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +106,7 @@ public class FragmentOrder extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        //----------------------------------------------------------------------------------------------------
         cost_add.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -116,6 +125,7 @@ public class FragmentOrder extends Fragment {
 
             }
         });
+        //----------------------------------------------------------------------------------------------------
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,14 +148,57 @@ public class FragmentOrder extends Fragment {
 
                 String date=calendar.get(Calendar.YEAR)+"-"+month+"-"+day+"T"+hour+":"+min+":00";
                 cost_object.setRequiredTime(date);
-                btn_date.setText("Время подачи\t\t\t\t\t\t\t\t\t\t\t\t\t"+hour+":"+min);
+                btn_date.setText("Время подачи\t\t\t\t\t\t\t\t\t\t\t"+hour+":"+min);
                 Log.e("Time", cost_object.getRequiredTime());
 
             }
         };
+        //----------------------------------------------------------------------------------------------------
+        btn_car.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("FragmentOrder","Click CarClass");
+                CarClassDialog.newInstance(onCarDialogListener).show(getFragmentManager(),"carclass");
+            }
+        });
+        onCarDialogListener=new CarClassDialog.OnCarDialogListener() {
+            @Override
+            public void onCarClassSet(boolean standart, boolean premium, boolean universal, boolean microbus) {
+                Log.e("FragmentOrder","callback CarClass");
+                if (standart){ img_carClass.setImageResource(R.mipmap.icon_standart); cost_object.setStandart();}
+                else
+                if (premium) { img_carClass.setImageResource(R.mipmap.icon_premium); cost_object.setPremium(true);}
+                else
+                if (universal){ img_carClass.setImageResource(R.mipmap.icon_universal);cost_object.setWagon(true);}
+                else
+                if (microbus) { img_carClass.setImageResource(R.mipmap.icon_microbus); cost_object.setMinibus(true);}
+                else img_carClass.setImageResource(R.color.transparent);
+                //5555
+                Gson gson=new Gson();
+                String jsonCost = gson.toJson(cost_object);
+                CostTask costTask1 = new CostTask(new MyCallBack() {
+                    @Override
+                    public void OnTaskDone(String result) {
+                        Log.e("CoastResponse:",result);
+                        try {
+                            dataJsonObj=new JSONObject(result);
+                            cost=dataJsonObj.getString("order_cost");
+                            textCost.setText(cost);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                costTask1.setContext(getContext());
+                costTask1.execute(jsonCost);
+
+            }
+        };
+        //----------------------------------------------------------------------------------------------------
         btn_zakaz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               /* cost_object.setComment(ed_comment.getText().toString());
                 Gson gson=new Gson();
                 String jsonCost = gson.toJson(cost_object);
                 CostTask costTask1 = new CostTask(new MyCallBack() {
@@ -155,7 +208,10 @@ public class FragmentOrder extends Fragment {
                     }
                 });
                 costTask1.setContext(getContext());
-                costTask1.execute(jsonCost);
+                costTask1.execute(jsonCost);*/
+                //CarClassDialog carClassDialog= new CarClassDialog();
+               // FragmentManager fragmentManager = getFragmentManager();
+               // carClassDialog.show(getFragmentManager(),"");
             }
         });
         return view;

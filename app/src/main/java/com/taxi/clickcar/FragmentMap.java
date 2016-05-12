@@ -163,7 +163,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 cost.setUserPhone(ActivityDrawer.Phone);
                 cost.setReservation(false);
                 cost.setTaxiColumnId(0);
-                if (routes.size()>1) cost.setRouteUndefined(true);
+                if (routes.size()<=1) cost.setRouteUndefined(true);
                 cost.setRoute(routes);
 
                 Gson gson=new Gson();

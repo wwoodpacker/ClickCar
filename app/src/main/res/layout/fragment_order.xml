@@ -17,19 +17,22 @@
         android:layout_marginRight="5dp" />
 
     <SeekBar
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
+
         android:progress="0"
         android:max="150"
         android:progressDrawable="@drawable/styled_process"
+        android:indeterminate="false"
         android:thumb="@mipmap/slider"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:longClickable="false" />
+        android:longClickable="false"
+        android:layout_alignLeft="@+id/btn_date"
+        android:layout_alignStart="@+id/btn_date"
+        android:layout_alignRight="@+id/btn_date"
+        android:layout_alignEnd="@+id/btn_date" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,6 +87,7 @@
         android:layout_alignBottom="@+id/textView3"
         android:layout_toLeftOf="@+id/imageView13"
         android:layout_toStartOf="@+id/imageView13" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,7 +107,7 @@
         android:text="Время подачи"
         android:id="@+id/btn_date"
         android:gravity="left|center_vertical"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:textColor="@color/white"
         android:background="@color/mainyellow"
         android:layout_below="@+id/textView4"
@@ -117,7 +121,7 @@
         android:text="Класс авто"
         android:id="@+id/btn_class"
         android:gravity="left|center_vertical"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:textColor="@color/white"
         android:background="@color/mainyellow"
         android:layout_below="@+id/btn_date"
@@ -130,7 +134,7 @@
     android:text="Доп.требования"
     android:id="@+id/btn_dop"
     android:gravity="left|center_vertical"
-    android:paddingLeft="5dp"
+    android:paddingLeft="10dp"
     android:textColor="@color/white"
     android:background="@color/mainyellow"
     android:layout_below="@+id/btn_class"
@@ -143,11 +147,42 @@
         android:text="Тип оплаты"
         android:id="@+id/btn_toplat"
         android:gravity="left|center_vertical"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:textColor="@color/white"
         android:background="@color/mainyellow"
         android:layout_below="@+id/btn_dop"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editcomment"
+        android:hint="Комментарий"
+        android:textColorHint="@color/maingrey"
+        android:layout_below="@+id/btn_toplat"
+        android:layout_alignLeft="@+id/btn_toplat"
+        android:layout_alignStart="@+id/btn_toplat"
+        android:layout_alignRight="@+id/btn_toplat"
+        android:layout_alignEnd="@+id/btn_toplat"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/btn_zakaz"
+        android:layout_marginBottom="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/imageClass"
+
+
+        android:layout_alignTop="@+id/btn_class"
+        android:layout_alignBottom="@+id/btn_class"
+        android:layout_alignRight="@+id/btn_class"
+        android:layout_alignEnd="@+id/btn_class"
+        android:layout_marginRight="20dp" />
+
 </RelativeLayout>

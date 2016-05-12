@@ -59,19 +59,34 @@ public class Cost {
 
     public boolean getWagon() { return this.wagon; }
 
-    public void setWagon(boolean wagon) { this.wagon = wagon; }
+    public void setWagon(boolean wagon) { this.wagon = wagon; this.premium=false;
+
+        this.minibus=false;
+    }
 
     private boolean minibus;
 
     public boolean getMinibus() { return this.minibus; }
 
-    public void setMinibus(boolean minibus) { this.minibus = minibus; }
+    public void setMinibus(boolean minibus) { this.minibus = minibus; this.premium=false;
+        this.wagon=false;
+
+    }
 
     private boolean premium;
 
     public boolean getPremium() { return this.premium; }
 
-    public void setPremium(boolean premium) { this.premium = premium; }
+    public void setPremium(boolean premium) { this.premium = premium;
+        this.wagon=false;
+        this.minibus=false;
+    }
+    public void setStandart(){
+        this.premium=false;
+        this.wagon=false;
+        this.minibus=false;
+
+    };
 
     private String flexible_tariff_name;
 
