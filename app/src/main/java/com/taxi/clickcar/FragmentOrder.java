@@ -21,6 +21,7 @@ import com.example.pickerclickcar.time.TimePickerDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.taxi.clickcar.Dialogs.CarClassDialog;
+import com.taxi.clickcar.Dialogs.DoplnDialog;
 import com.taxi.clickcar.Order.Cost;
 import com.taxi.clickcar.Tasks.CostTask;
 
@@ -34,13 +35,14 @@ import java.util.Calendar;
  */
 public class FragmentOrder extends Fragment {
     private CostTask costTask;
-    public ImageView btn_back,img_carClass;
-    public Button btn_date,btn_zakaz,btn_car;
+    public ImageView btn_back,img_carClass,img_Baggage,img_Animal,img_Condition,img_Curier;
+    public Button btn_date,btn_zakaz,btn_car,btn_dop;
     public EditText ed_comment=null;
     public TextView textCost;
     private Cost cost_object=null;
     public TimePickerDialog.OnTimeSetListener onTimeSetListener=null;
     public CarClassDialog.OnCarDialogListener onCarDialogListener=null;
+    public DoplnDialog.OnDoplnDialogListener onDoplnDialogListener=null;
     public SeekBar cost_add;
     public String cost="";
     private Calendar calendar;
@@ -62,8 +64,14 @@ public class FragmentOrder extends Fragment {
         ed_comment=(EditText)view.findViewById(R.id.editcomment);
         btn_back= (ImageView)view.findViewById(R.id.imageView13);
         img_carClass=(ImageView)view.findViewById(R.id.imageClass);
+        img_Baggage=(ImageView)view.findViewById(R.id.imgBaggage);
+        img_Animal=(ImageView)view.findViewById(R.id.imgAnimal);
+        img_Condition=(ImageView)view.findViewById(R.id.imgCondition);
+        img_Curier=(ImageView)view.findViewById(R.id.imgCurier);
+
         btn_zakaz=(Button)view.findViewById(R.id.btn_zakaz);
         btn_car=(Button)view.findViewById(R.id.btn_class);
+        btn_dop=(Button)view.findViewById(R.id.btn_dop);
         textCost = (TextView)view.findViewById(R.id.text_cost);
         cost_add =(SeekBar)view.findViewById(R.id.seekBar);
         btn_date=(Button)view.findViewById(R.id.btn_date);
@@ -172,7 +180,7 @@ public class FragmentOrder extends Fragment {
                 if (universal){ img_carClass.setImageResource(R.mipmap.icon_universal);cost_object.setWagon(true);}
                 else
                 if (microbus) { img_carClass.setImageResource(R.mipmap.icon_microbus); cost_object.setMinibus(true);}
-                else img_carClass.setImageResource(R.color.transparent);
+                else {img_carClass.setImageResource(R.color.transparent);cost_object.setStandart();}
                 //5555
                 Gson gson=new Gson();
                 String jsonCost = gson.toJson(cost_object);
@@ -192,6 +200,60 @@ public class FragmentOrder extends Fragment {
                 costTask1.setContext(getContext());
                 costTask1.execute(jsonCost);
 
+            }
+        };
+        //----------------------------------------------------------------------------------------------------
+        btn_dop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("FragmentOrder","Click DoplnDialog");
+                DoplnDialog.newInstance(onDoplnDialogListener).show(getFragmentManager(),"dopln");
+            }
+        });
+        onDoplnDialogListener=new DoplnDialog.OnDoplnDialogListener() {
+            @Override
+            public void onDoplnSet(boolean baggage, boolean animal, boolean condition, boolean curier) {
+                if (baggage){ img_Baggage.setImageResource(R.mipmap.ic_baggage); cost_object.setBaggage(true);} else {
+                    img_Baggage.setImageResource(R.color.transparent);
+                    cost_object.setBaggage(false);
+                }
+                if (animal) { img_Animal.setImageResource(R.mipmap.ic_animal); cost_object.setAnimal(true);}else{
+                    img_Animal.setImageResource(R.color.transparent);
+                    cost_object.setAnimal(false);
+                }
+                if (condition){ img_Condition.setImageResource(R.mipmap.ic_condition);cost_object.setConditioner(true);}else {
+                    img_Condition.setImageResource(R.color.transparent);
+                    cost_object.setConditioner(false);
+                }
+                if (curier) { img_Curier.setImageResource(R.mipmap.ic_curier); cost_object.setCourierDelivery(true);}else{
+                    img_Curier.setImageResource(R.color.transparent);
+                    cost_object.setCourierDelivery(false);
+                }
+                if(!baggage&&!animal&&!condition&&!curier) {
+                    img_Baggage.setImageResource(R.color.transparent);
+                    img_Animal.setImageResource(R.color.transparent);
+                    img_Condition.setImageResource(R.color.transparent);
+                    img_Curier.setImageResource(R.color.transparent);
+                    cost_object.dropDopln();
+                }
+                //5555
+                Gson gson=new Gson();
+                String jsonCost = gson.toJson(cost_object);
+                CostTask costTask1 = new CostTask(new MyCallBack() {
+                    @Override
+                    public void OnTaskDone(String result) {
+                        Log.e("CoastResponse:",result);
+                        try {
+                            dataJsonObj=new JSONObject(result);
+                            cost=dataJsonObj.getString("order_cost");
+                            textCost.setText(cost);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                costTask1.setContext(getContext());
+                costTask1.execute(jsonCost);
             }
         };
         //----------------------------------------------------------------------------------------------------

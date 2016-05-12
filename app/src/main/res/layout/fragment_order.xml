@@ -184,5 +184,39 @@
         android:layout_alignRight="@+id/btn_class"
         android:layout_alignEnd="@+id/btn_class"
         android:layout_marginRight="20dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgBaggage"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+        android:layout_alignRight="@+id/btn_dop"
+
+        android:layout_marginRight="5dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgAnimal"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+
+        android:layout_toLeftOf="@+id/imgBaggage" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgCondition"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+
+        android:layout_toLeftOf="@+id/imgAnimal" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgCurier"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+
+        android:layout_toLeftOf="@+id/imgCondition" />
 
 </RelativeLayout>

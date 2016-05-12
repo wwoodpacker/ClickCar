@@ -74,7 +74,12 @@ public class Cost {
     }
 
     private boolean premium;
-
+    public void dropDopln(){
+        setAnimal(false);
+        setBaggage(false);
+        setConditioner(false);
+        setCourierDelivery(false);
+    }
     public boolean getPremium() { return this.premium; }
 
     public void setPremium(boolean premium) { this.premium = premium;

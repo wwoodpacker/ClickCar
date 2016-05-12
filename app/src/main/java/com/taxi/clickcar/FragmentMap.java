@@ -122,7 +122,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onClick(View v) {
                 ArrayList<Route> routes = new ArrayList<Route>();
                 String r1="",r2="",r3="",r4="";
-                if(searchView1.getQuery().length()>0){
+                if(searchView1.getQuery().length()>1){
                     r1=searchView1.getQuery();
                     //route1
                     Route route = new Route();
@@ -131,7 +131,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     routes.add(route);
 
                 }
-                if(searchView2.getQuery().length()>0) {
+                if(searchView2.getQuery().length()>1) {
                     r2 = searchView2.getQuery();
                     //route2
                     Route route2 = new Route();
@@ -139,7 +139,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     route2.setNumber(r2.substring(r2.lastIndexOf(" "),r2.length()));
                     routes.add(route2);
                 }
-                if(searchView3.getQuery().length()>0){
+                if(searchView3.getQuery().length()>1){
                     r3=searchView3.getQuery();
                     //route3
                     Route route3 = new Route();
@@ -147,7 +147,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     route3.setNumber(r3.substring(r3.lastIndexOf(" "),r3.length()));
                     routes.add(route3);
                 }
-                if(searchView4.getQuery().length()>0){
+                if(searchView4.getQuery().length()>1){
                     r4=searchView4.getQuery();
                     //route4
                     Route route4 = new Route();

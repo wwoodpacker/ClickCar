@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/car_class_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:background="@color/white">
+    <FrameLayout
+        android:id="@+id/car_display_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerHorizontal="true">
+
+        <include
+            layout="@layout/header_dop_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="60dip" />
+
+    </FrameLayout>
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin1"
+        android:layout_below="@+id/car_display_background">
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/im1" android:background="@mipmap/ic_baggage"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt1" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Багаж" android:textColor="@color/mainblue" android:layout_toRightOf="@+id/im1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im11" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin2"
+        android:layout_below="@+id/lin1" >
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/im2" android:background="@mipmap/ic_animal"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true" />
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt2" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Перевозка животного" android:textColor="@color/mainblue"
+            android:layout_toRightOf="@+id/im2"
+            android:layout_toEndOf="@+id/im2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im22" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin3"
+        android:layout_below="@+id/lin2" >
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/im3" android:background="@mipmap/ic_condition"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true" />
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt3" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Кондиционер" android:textColor="@color/mainblue"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/im3"
+            android:layout_marginLeft="5dp" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im33" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin4"
+        android:layout_below="@+id/lin3">
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/im4" android:background="@mipmap/ic_curier"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt4"
+            android:layout_height="wrap_content" android:text="Курьер" android:textColor="@color/mainblue"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/im4"
+            android:layout_centerVertical="true" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im44" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/done_button"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="ОК"
+        android:textSize="@dimen/done_label_size"
+        android:textColor="@color/mainblue"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/lin4" />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отмена"
+        android:id="@+id/cancel_button"
+        android:textSize="@dimen/done_label_size"
+        android:background="@android:color/transparent"
+        android:textColor="@color/mainblue"
+        android:layout_alignTop="@+id/done_button"
+        android:layout_toLeftOf="@+id/done_button"
+        android:layout_toStartOf="@+id/done_button" />
+</RelativeLayout>
+
+
