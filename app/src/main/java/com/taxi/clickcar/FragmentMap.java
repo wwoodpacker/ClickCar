@@ -105,6 +105,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView2 = (FloatingSearchView) view.findViewById(R.id.floating_search_view2);
         searchView3 = (FloatingSearchView) view.findViewById(R.id.floating_search_view3);
         searchView4 = (FloatingSearchView) view.findViewById(R.id.floating_search_view4);
+
         btn_add1 = (ImageView) view.findViewById(R.id.imageView9);
         btn_add2 = (ImageView) view.findViewById(R.id.imageView10);
         btn_add3 = (ImageView) view.findViewById(R.id.imageView11);
@@ -121,6 +122,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 ArrayList<Route> routes = new ArrayList<Route>();
+                routes.clear();
                 String r1="",r2="",r3="",r4="";
                 if(searchView1.getQuery().length()>1){
                     r1=searchView1.getQuery();
@@ -171,7 +173,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
 
                 Bundle bundle=new Bundle();
                 bundle.putString("COSTJSON",jsonCost);
-
+                Log.e("From map to order",jsonCost);
                 FragmentOrder fragmentOrder=new FragmentOrder();
                 fragmentOrder.setArguments(bundle);
 
@@ -525,23 +527,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                         if (flag_add1) {
                             searchView2.hideProgress();
                             searchView2.setSearchText(result);
-
+                            Log.e("Json Camera1", result);
                         } else
                         if(flag_add2){
                             searchView3.hideProgress();
                             searchView3.setSearchText(result);
-                            Log.e("Json Camera", result);
+                            Log.e("Json Camera2", result);
                         }else
                             if(flag_add3){
                                 searchView4.hideProgress();
                                 searchView4.setSearchText(result);
-                                Log.e("Json Camera", result);
+                                Log.e("Json Camera3", result);
                             }
                         else
                             {
                                 searchView1.hideProgress();
                                 searchView1.setSearchText(result);
-                                Log.e("Json Camera", result);
+                                Log.e("Json Camera4", result);
                             }
                     }
                 });

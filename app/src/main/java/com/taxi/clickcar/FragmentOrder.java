@@ -1,5 +1,9 @@
 package com.taxi.clickcar;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -15,15 +19,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pickerclickcar.time.RadialPickerLayout;
 import com.example.pickerclickcar.time.TimePickerDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.leo.simplearcloader.ArcConfiguration;
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.Dialogs.CarClassDialog;
 import com.taxi.clickcar.Dialogs.DoplnDialog;
+import com.taxi.clickcar.Dialogs.OplataDialog;
 import com.taxi.clickcar.Order.Cost;
 import com.taxi.clickcar.Tasks.CostTask;
+import com.taxi.clickcar.Tasks.FragmentMap2;
+import com.taxi.clickcar.Tasks.OrderTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,15 +45,20 @@ import java.util.Calendar;
  * Created by Назар on 22.04.2016.
  */
 public class FragmentOrder extends Fragment {
+    public final static String BROADCAST_ACTION = "com.taxi.clickcar.p0961servicebackbroadcast";
+    public final static String PARAM_RESULT = "result";
+    public final static String PARAM_STATUS = "status";
     private CostTask costTask;
     public ImageView btn_back,img_carClass,img_Baggage,img_Animal,img_Condition,img_Curier;
-    public Button btn_date,btn_zakaz,btn_car,btn_dop;
+    public Button btn_date,btn_zakaz,btn_car,btn_dop,btn_oplata;
     public EditText ed_comment=null;
-    public TextView textCost;
+    private SimpleArcDialog mDialog;
+    public TextView textCost,textDate,textOplata;
     private Cost cost_object=null;
     public TimePickerDialog.OnTimeSetListener onTimeSetListener=null;
     public CarClassDialog.OnCarDialogListener onCarDialogListener=null;
     public DoplnDialog.OnDoplnDialogListener onDoplnDialogListener=null;
+    public OplataDialog.OnOplataDialogListener onOplataDialogListener=null;
     public SeekBar cost_add;
     public String cost="";
     private Calendar calendar;
@@ -72,7 +88,10 @@ public class FragmentOrder extends Fragment {
         btn_zakaz=(Button)view.findViewById(R.id.btn_zakaz);
         btn_car=(Button)view.findViewById(R.id.btn_class);
         btn_dop=(Button)view.findViewById(R.id.btn_dop);
+        btn_oplata=(Button)view.findViewById(R.id.btn_toplat);
         textCost = (TextView)view.findViewById(R.id.text_cost);
+        textDate=(TextView)view.findViewById(R.id.txt_time);
+        textOplata=(TextView)view.findViewById(R.id.txt_oplata);
         cost_add =(SeekBar)view.findViewById(R.id.seekBar);
         btn_date=(Button)view.findViewById(R.id.btn_date);
         Bundle bundle= this.getArguments();
@@ -156,7 +175,8 @@ public class FragmentOrder extends Fragment {
 
                 String date=calendar.get(Calendar.YEAR)+"-"+month+"-"+day+"T"+hour+":"+min+":00";
                 cost_object.setRequiredTime(date);
-                btn_date.setText("Время подачи\t\t\t\t\t\t\t\t\t\t\t"+hour+":"+min);
+                //btn_date.setText("Время подачи\t\t\t\t\t\t\t\t\t\t\t"+hour+":"+min);
+                textDate.setText(hour+":"+min);
                 Log.e("Time", cost_object.getRequiredTime());
 
             }
@@ -257,23 +277,113 @@ public class FragmentOrder extends Fragment {
             }
         };
         //----------------------------------------------------------------------------------------------------
+        btn_oplata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OplataDialog.newInstance(onOplataDialogListener).show(getFragmentManager(),"oplata");
+            }
+        });
+        onOplataDialogListener=new OplataDialog.OnOplataDialogListener() {
+            @Override
+            public void onOplataSet(boolean cash, boolean nocash) {
+                if (cash) {textOplata.setText("Наличный расчет");cost_object.setPaymentType(0);}else
+                if(nocash) {textOplata.setText("Безналичный расчет");cost_object.setPaymentType(1);}else
+                {textOplata.setText("");cost_object.setPaymentType(0);}
+            }
+        };
+        //----------------------------------------------------------------------------------------------------
         btn_zakaz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* cost_object.setComment(ed_comment.getText().toString());
+                cost_object.setComment(ed_comment.getText().toString());
+                //add date exeption "Id":-54,
                 Gson gson=new Gson();
                 String jsonCost = gson.toJson(cost_object);
-                CostTask costTask1 = new CostTask(new MyCallBack() {
+                Log.e("Zakaz",jsonCost);
+
+                OrderTask orderTask = new OrderTask(new MyCallBack() {
                     @Override
                     public void OnTaskDone(String result) {
-                        Log.e("CoastResponse:",result);
+                        Log.e("zakazResponse:",result);
+                        try {
+                            JSONObject jsonObject=new JSONObject(result);
+                            String UID=jsonObject.getString("dispatching_order_uid");
+                            getContext().startService(new Intent(getContext(),FoneService.class).putExtra("Url",UID));
+                            mDialog = new SimpleArcDialog(getContext());
+                            ArcConfiguration configuration = new ArcConfiguration(getContext());
+                            configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
+                            configuration.setText("Поиск машины..");
+
+                            mDialog.setConfiguration(configuration);
+
+                            mDialog.show();
+
+                            BroadcastReceiver br= new BroadcastReceiver() {
+                                @Override
+                                public void onReceive(Context context, Intent intent) {
+
+                                    int status=intent.getIntExtra(PARAM_STATUS,0);
+                                    if (status==100){
+                                        mDialog.dismiss();
+                                        String text=intent.getStringExtra(PARAM_RESULT);
+                                       Bundle bundle=new Bundle();
+                                       bundle.putString("ORDERJSON",text);
+
+                                        FragmentMap2 fragmentMap2=new FragmentMap2();
+                                        fragmentMap2.setArguments(bundle);
+
+                                        FragmentManager fragmentManager = getFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                        fragmentTransaction.replace(R.id.container,fragmentMap2);
+
+                                        fragmentTransaction.commit();
+                                    }
+                                    if(status==200){
+                                        mDialog.dismiss();
+                                        Toast.makeText(getContext(),"Машина не найдена",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            };
+                            // создаем фильтр для BroadcastReceiver
+                            IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
+                            // регистрируем (включаем) BroadcastReceiver
+                            getContext().registerReceiver(br, intFilt);
+
+                          /*  Bundle bundle=new Bundle();
+                            bundle.putString("ORDERJSON",UID);
+
+                            FragmentMap2 fragmentMap2=new FragmentMap2();
+                            fragmentMap2.setArguments(bundle);
+
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                            fragmentTransaction.replace(R.id.container,fragmentMap2);
+
+                            fragmentTransaction.commit();*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(),"Неверно выбрана дата!",Toast.LENGTH_SHORT).show();
+                            Log.e("Json","Exeption");
+                        }
                     }
                 });
-                costTask1.setContext(getContext());
-                costTask1.execute(jsonCost);*/
-                //CarClassDialog carClassDialog= new CarClassDialog();
-               // FragmentManager fragmentManager = getFragmentManager();
-               // carClassDialog.show(getFragmentManager(),"");
+                orderTask.setContext(getContext());
+                orderTask.execute(jsonCost);
+
+               /* Bundle bundle=new Bundle();
+                bundle.putString("COSTJSON","params");
+
+                FragmentMap2 fragmentMap2=new FragmentMap2();
+                fragmentMap2.setArguments(bundle);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.container,fragmentMap2);
+                //fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();*/
             }
         });
         return view;

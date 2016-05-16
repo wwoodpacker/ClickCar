@@ -150,7 +150,8 @@ public class Cost {
     private int taxiColumnId;
 
     public int getTaxiColumnId() { return this.taxiColumnId; }
-
+    private int payment_type;
     public void setTaxiColumnId(int taxiColumnId) { this.taxiColumnId = taxiColumnId; }
-
+    public int getPaymentType(){return this.payment_type;}
+    public void setPaymentType(int payment_type){this.payment_type=payment_type;}
 }

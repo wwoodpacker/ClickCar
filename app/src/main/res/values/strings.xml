@@ -11,6 +11,8 @@
     <string name="sign_in_url">/api/account</string>
     <string name="register_url">/api/account/register</string>
     <string name="cost_url">/api/weborders/cost</string>
+    <string name="order_url">/api/weborders</string>
+    <string name="cancel_url">/api/weborders/cancel</string>
     <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
     <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
     <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
@@ -21,10 +23,10 @@
     <string name="btn_registration">Регистация</string>
     <string name="label_register">Регистрация</string>
     <string name="login">Логин(Почта)</string>
-    <string name="signin_phone">Номер телефона(380631234567)</string>
+    <string name="signin_phone">380631234567</string>
     <string name="name">Имя</string>
     <string name="phone">Телефон</string>
-    <string name="pass">Пароль</string>
+    <string name="pass">Пароль(мин 7)</string>
     <string name="pass_again">Пароль повторно</string>
     <string name="accses_reg">Подтвердить</string>
     <string name="confirm_code">Код подтверждения</string>
