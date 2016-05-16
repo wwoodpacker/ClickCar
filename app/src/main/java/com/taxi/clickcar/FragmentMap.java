@@ -10,8 +10,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.audiofx.BassBoost;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 
@@ -64,6 +66,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.support.v4.app.DialogFragment;
 
@@ -76,19 +80,20 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  */
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     private static final int PERMISSION_LOCATION_REQUEST_CODE = 1;
+    private static final int REQUEST_LOCATION = 2;
     private GoogleMap mMap;
     private GetGeoObjectTask task;
     private GetGeoObjectTask2 task2;
     private Button btn_zakaz;
     private Gson gson;
-    private ImageView btn_add1, btn_add2,btn_add3,btn_add4;
+    private ImageView btn_add1, btn_add2, btn_add3, btn_add4;
     private Calendar calendar;
-    private boolean flag_add1 = false,flag_add2=false,flag_add3=false,flag_add4=false;
+    private boolean flag_add1 = false, flag_add2 = false, flag_add3 = false, flag_add4 = false;
     private String provider;
     public View view;
     private LocationManager locationManager;
     TimePickerDialog.OnTimeSetListener callback;
-    FloatingSearchView searchView1, searchView2,searchView3,searchView4;
+    FloatingSearchView searchView1, searchView2, searchView3, searchView4;
 
     public FragmentMap() {
     }
@@ -97,14 +102,18 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_map,null);
+        view = inflater.inflate(R.layout.fragment_map, null);
         Log.e("FragmentMap", "onCreateView");
-        flag_add1 = false;flag_add2=false;flag_add3=false;flag_add4=false;
-        gson=new Gson();
+        flag_add1 = false;
+        flag_add2 = false;
+        flag_add3 = false;
+        flag_add4 = false;
+        gson = new Gson();
         searchView1 = (FloatingSearchView) view.findViewById(R.id.floating_search_view);
         searchView2 = (FloatingSearchView) view.findViewById(R.id.floating_search_view2);
         searchView3 = (FloatingSearchView) view.findViewById(R.id.floating_search_view3);
         searchView4 = (FloatingSearchView) view.findViewById(R.id.floating_search_view4);
+
         btn_add1 = (ImageView) view.findViewById(R.id.imageView9);
         btn_add2 = (ImageView) view.findViewById(R.id.imageView10);
         btn_add3 = (ImageView) view.findViewById(R.id.imageView11);
@@ -121,64 +130,74 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 ArrayList<Route> routes = new ArrayList<Route>();
-                String r1="",r2="",r3="",r4="";
-                if(searchView1.getQuery().length()>1){
-                    r1=searchView1.getQuery();
+                routes.clear();
+                String r1 = "", r2 = "", r3 = "", r4 = "";
+                int pos=0;
+                if (searchView1.getQuery().length() > 1) {
+                    r1 = searchView1.getQuery();
+                    pos=0;
                     //route1
                     Route route = new Route();
-                    route.setName(r1.substring(0,r1.lastIndexOf(" ")));
-                    route.setNumber(r1.substring(r1.lastIndexOf(" "),r1.length()));
+                    pos=findFirstDigit(r1);
+                    route.setName(r1.substring(0, pos).trim());
+                    route.setNumber(r1.substring(pos, r1.length()).trim());
                     routes.add(route);
 
                 }
-                if(searchView2.getQuery().length()>1) {
+                if (searchView2.getQuery().length() > 1) {
                     r2 = searchView2.getQuery();
+                    pos=0;
                     //route2
                     Route route2 = new Route();
-                    route2.setName(r2.substring(0,r2.lastIndexOf(" ")));
-                    route2.setNumber(r2.substring(r2.lastIndexOf(" "),r2.length()));
+                    pos=findFirstDigit(r2);
+                    route2.setName(r2.substring(0, pos).trim());
+                    route2.setNumber(r2.substring(pos, r2.length()).trim());
                     routes.add(route2);
                 }
-                if(searchView3.getQuery().length()>1){
-                    r3=searchView3.getQuery();
+                if (searchView3.getQuery().length() > 1) {
+                    r3 = searchView3.getQuery();
+                    pos=0;
                     //route3
                     Route route3 = new Route();
-                    route3.setName(r3.substring(0,r3.lastIndexOf(" ")));
-                    route3.setNumber(r3.substring(r3.lastIndexOf(" "),r3.length()));
+                    pos=findFirstDigit(r3);
+                    route3.setName(r3.substring(0, pos).trim());
+                    route3.setNumber(r3.substring(pos, r3.length()).trim());
                     routes.add(route3);
                 }
-                if(searchView4.getQuery().length()>1){
-                    r4=searchView4.getQuery();
+                if (searchView4.getQuery().length() > 1) {
+                    r4 = searchView4.getQuery();
+                    pos=0;
                     //route4
                     Route route4 = new Route();
-                    route4.setName(r4.substring(0,r4.lastIndexOf(" ")));
-                    route4.setNumber(r4.substring(r4.lastIndexOf(" "),r4.length()));
+                    pos=findFirstDigit(r4);
+                    route4.setName(r4.substring(0, pos).trim());
+                    route4.setNumber(r4.substring(pos, r4.length()).trim());
                     routes.add(route4);
 
                 }
 
                 //cost
-                Cost cost=new Cost();
+                Cost cost = new Cost();
                 cost.setUserFullName(ActivityDrawer.Name);
                 cost.setUserPhone(ActivityDrawer.Phone);
                 cost.setReservation(false);
                 cost.setTaxiColumnId(0);
-                if (routes.size()<=1) cost.setRouteUndefined(true);
+                if (routes.size() <= 1) cost.setRouteUndefined(true);
                 cost.setRoute(routes);
 
-                Gson gson=new Gson();
+                Gson gson = new Gson();
                 String jsonCost = gson.toJson(cost);
 
-                Bundle bundle=new Bundle();
-                bundle.putString("COSTJSON",jsonCost);
-
-                FragmentOrder fragmentOrder=new FragmentOrder();
+                Bundle bundle = new Bundle();
+                bundle.putString("COSTJSON", jsonCost);
+                Log.e("From map to order", jsonCost);
+                FragmentOrder fragmentOrder = new FragmentOrder();
                 fragmentOrder.setArguments(bundle);
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                fragmentTransaction.replace(R.id.container,fragmentOrder);
+                fragmentTransaction.replace(R.id.container, fragmentOrder);
                 //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
@@ -190,7 +209,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView1.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-                GeoSuggestion geoSuggestion=(GeoSuggestion)searchSuggestion;
+                GeoSuggestion geoSuggestion = (GeoSuggestion) searchSuggestion;
                 searchView1.setSearchText(geoSuggestion.getBody());
             }
 
@@ -202,7 +221,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView2.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-                GeoSuggestion geoSuggestion=(GeoSuggestion)searchSuggestion;
+                GeoSuggestion geoSuggestion = (GeoSuggestion) searchSuggestion;
                 searchView2.setSearchText(geoSuggestion.getBody());
             }
 
@@ -214,7 +233,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView3.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-                GeoSuggestion geoSuggestion=(GeoSuggestion)searchSuggestion;
+                GeoSuggestion geoSuggestion = (GeoSuggestion) searchSuggestion;
                 searchView3.setSearchText(geoSuggestion.getBody());
             }
 
@@ -226,7 +245,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView4.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-                GeoSuggestion geoSuggestion=(GeoSuggestion)searchSuggestion;
+                GeoSuggestion geoSuggestion = (GeoSuggestion) searchSuggestion;
                 searchView4.setSearchText(geoSuggestion.getBody());
             }
 
@@ -238,21 +257,21 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView1.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
-                Log.e("search1","querychange");
+                Log.e("search1", "querychange");
                 searchView1.showProgress();
-                task2=new GetGeoObjectTask2(new MyCallBack() {
+                task2 = new GetGeoObjectTask2(new MyCallBack() {
                     @Override
                     public void OnTaskDone(String result) {
 
-                        RootObject obj=gson.fromJson(result,RootObject.class);
-                        List<GeoSuggestion> sug_list =new ArrayList<>();
-                        for(int i=0;i<obj.getGeoStreets().getGeoStreet().size();i++){
-                            for(int j=0;j<obj.getGeoStreets().getGeoStreet().get(i).getHouses().size();j++) {
-                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName()+"" +
-                                        ""+obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
+                        RootObject obj = gson.fromJson(result, RootObject.class);
+                        List<GeoSuggestion> sug_list = new ArrayList<>();
+                        for (int i = 0; i < obj.getGeoStreets().getGeoStreet().size(); i++) {
+                            for (int j = 0; j < obj.getGeoStreets().getGeoStreet().get(i).getHouses().size(); j++) {
+                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName() + "" +
+                                        "" + obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
                             }
                         }
-                        for(int i=0;i<obj.getGeoObjects().getGeoObject().size();i++){
+                        for (int i = 0; i < obj.getGeoObjects().getGeoObject().size(); i++) {
                             sug_list.add(new GeoSuggestion(obj.getGeoObjects().getGeoObject().get(i).getName()));
                         }
 
@@ -264,28 +283,28 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     }
                 });
                 task2.setContext(getContext());
-                task2.execute(newQuery.replace(" ",""));
+                task2.execute(newQuery.replace(" ", ""));
             }
 
         });
         searchView2.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
-                Log.e("search2","querychange");
+                Log.e("search2", "querychange");
                 searchView2.showProgress();
-                task2=new GetGeoObjectTask2(new MyCallBack() {
+                task2 = new GetGeoObjectTask2(new MyCallBack() {
                     @Override
                     public void OnTaskDone(String result) {
 
-                        RootObject obj=gson.fromJson(result,RootObject.class);
-                        List<GeoSuggestion> sug_list =new ArrayList<>();
-                        for(int i=0;i<obj.getGeoStreets().getGeoStreet().size();i++){
-                            for(int j=0;j<obj.getGeoStreets().getGeoStreet().get(i).getHouses().size();j++) {
-                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName()+"" +
-                                        ""+obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
+                        RootObject obj = gson.fromJson(result, RootObject.class);
+                        List<GeoSuggestion> sug_list = new ArrayList<>();
+                        for (int i = 0; i < obj.getGeoStreets().getGeoStreet().size(); i++) {
+                            for (int j = 0; j < obj.getGeoStreets().getGeoStreet().get(i).getHouses().size(); j++) {
+                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName() + "" +
+                                        "" + obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
                             }
                         }
-                        for(int i=0;i<obj.getGeoObjects().getGeoObject().size();i++){
+                        for (int i = 0; i < obj.getGeoObjects().getGeoObject().size(); i++) {
                             sug_list.add(new GeoSuggestion(obj.getGeoObjects().getGeoObject().get(i).getName()));
                         }
 
@@ -297,27 +316,27 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     }
                 });
                 task2.setContext(getContext());
-                task2.execute(newQuery.replace(" ",""));
+                task2.execute(newQuery.replace(" ", ""));
             }
         });
         searchView3.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
-                Log.e("search3","querychange");
+                Log.e("search3", "querychange");
                 searchView3.showProgress();
-                task2=new GetGeoObjectTask2(new MyCallBack() {
+                task2 = new GetGeoObjectTask2(new MyCallBack() {
                     @Override
                     public void OnTaskDone(String result) {
 
-                        RootObject obj=gson.fromJson(result,RootObject.class);
-                        List<GeoSuggestion> sug_list =new ArrayList<>();
-                        for(int i=0;i<obj.getGeoStreets().getGeoStreet().size();i++){
-                            for(int j=0;j<obj.getGeoStreets().getGeoStreet().get(i).getHouses().size();j++) {
-                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName()+"" +
-                                        ""+obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
+                        RootObject obj = gson.fromJson(result, RootObject.class);
+                        List<GeoSuggestion> sug_list = new ArrayList<>();
+                        for (int i = 0; i < obj.getGeoStreets().getGeoStreet().size(); i++) {
+                            for (int j = 0; j < obj.getGeoStreets().getGeoStreet().get(i).getHouses().size(); j++) {
+                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName() + "" +
+                                        "" + obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
                             }
                         }
-                        for(int i=0;i<obj.getGeoObjects().getGeoObject().size();i++){
+                        for (int i = 0; i < obj.getGeoObjects().getGeoObject().size(); i++) {
                             sug_list.add(new GeoSuggestion(obj.getGeoObjects().getGeoObject().get(i).getName()));
                         }
 
@@ -329,27 +348,27 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     }
                 });
                 task2.setContext(getContext());
-                task2.execute(newQuery.replace(" ",""));
+                task2.execute(newQuery.replace(" ", ""));
             }
         });
         searchView4.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
-                Log.e("search4","querychange");
+                Log.e("search4", "querychange");
                 searchView4.showProgress();
-                task2=new GetGeoObjectTask2(new MyCallBack() {
+                task2 = new GetGeoObjectTask2(new MyCallBack() {
                     @Override
                     public void OnTaskDone(String result) {
 
-                        RootObject obj=gson.fromJson(result,RootObject.class);
-                        List<GeoSuggestion> sug_list =new ArrayList<>();
-                        for(int i=0;i<obj.getGeoStreets().getGeoStreet().size();i++){
-                            for(int j=0;j<obj.getGeoStreets().getGeoStreet().get(i).getHouses().size();j++) {
-                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName()+"" +
-                                        ""+obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
+                        RootObject obj = gson.fromJson(result, RootObject.class);
+                        List<GeoSuggestion> sug_list = new ArrayList<>();
+                        for (int i = 0; i < obj.getGeoStreets().getGeoStreet().size(); i++) {
+                            for (int j = 0; j < obj.getGeoStreets().getGeoStreet().get(i).getHouses().size(); j++) {
+                                sug_list.add(new GeoSuggestion(obj.getGeoStreets().getGeoStreet().get(i).getName() + "" +
+                                        "" + obj.getGeoStreets().getGeoStreet().get(i).getHouses().get(j).getHouse()));
                             }
                         }
-                        for(int i=0;i<obj.getGeoObjects().getGeoObject().size();i++){
+                        for (int i = 0; i < obj.getGeoObjects().getGeoObject().size(); i++) {
                             sug_list.add(new GeoSuggestion(obj.getGeoObjects().getGeoObject().get(i).getName()));
                         }
 
@@ -361,15 +380,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                     }
                 });
                 task2.setContext(getContext());
-                task2.execute(newQuery.replace(" ",""));
+                task2.execute(newQuery.replace(" ", ""));
             }
         });
         searchView1.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
-                flag_add1=false;
-                flag_add2=false;
-                flag_add3=false;
+                flag_add1 = false;
+                flag_add2 = false;
+                flag_add3 = false;
                 Log.d("search", "onFocus()");
             }
 
@@ -382,9 +401,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView2.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
-                flag_add1=true;
-                flag_add2=false;
-                flag_add3=false;
+                flag_add1 = true;
+                flag_add2 = false;
+                flag_add3 = false;
                 Log.d("search", "onFocus()");
             }
 
@@ -397,9 +416,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView3.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
-                flag_add1=false;
-                flag_add2=true;
-                flag_add3=false;
+                flag_add1 = false;
+                flag_add2 = true;
+                flag_add3 = false;
                 Log.d("search", "onFocus()");
             }
 
@@ -412,9 +431,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         searchView4.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
-                flag_add1=false;
-                flag_add2=false;
-                flag_add3=true;
+                flag_add1 = false;
+                flag_add2 = false;
+                flag_add3 = true;
                 Log.d("search", "onFocus()");
             }
 
@@ -438,49 +457,49 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         btn_add2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flag_add4){
+                if (flag_add4) {
                     searchView2.setVisibility(View.GONE);
                     searchView2.clearSearchFocus();
                     btn_add2.setVisibility(View.GONE);
                     btn_add1.setVisibility(View.VISIBLE);
                     btn_add1.bringToFront();
-                    flag_add4=false;
-                    flag_add1=false;
-                    flag_add2=false;
-                    flag_add3=false;
-                }else {
-                btn_add2.setVisibility(View.GONE);
-                btn_add3.bringToFront();
-                btn_add3.setVisibility(View.VISIBLE);
-                searchView3.setVisibility(View.VISIBLE);
-                searchView3.bringToFront();
-                flag_add2=true;
-                flag_add3=false;
-                flag_add1=false;
+                    flag_add4 = false;
+                    flag_add1 = false;
+                    flag_add2 = false;
+                    flag_add3 = false;
+                } else {
+                    btn_add2.setVisibility(View.GONE);
+                    btn_add3.bringToFront();
+                    btn_add3.setVisibility(View.VISIBLE);
+                    searchView3.setVisibility(View.VISIBLE);
+                    searchView3.bringToFront();
+                    flag_add2 = true;
+                    flag_add3 = false;
+                    flag_add1 = false;
                 }
             }
         });
         btn_add3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (flag_add4){
+                if (flag_add4) {
                     searchView3.setVisibility(View.GONE);
                     searchView3.clearSearchFocus();
                     btn_add3.setVisibility(View.GONE);
                     btn_add2.setVisibility(View.VISIBLE);
-                    flag_add1=true;
-                    flag_add2=false;
-                    flag_add3=false;
+                    flag_add1 = true;
+                    flag_add2 = false;
+                    flag_add3 = false;
 
-                }else {
-                btn_add3.setVisibility(View.GONE);
-                btn_add3.bringToFront();
-                btn_add4.setVisibility(View.VISIBLE);
-                searchView4.setVisibility(View.VISIBLE);
-                searchView4.bringToFront();
-                flag_add3 = true;
-                flag_add1 = false;
-                flag_add2 = false;
+                } else {
+                    btn_add3.setVisibility(View.GONE);
+                    btn_add3.bringToFront();
+                    btn_add4.setVisibility(View.VISIBLE);
+                    searchView4.setVisibility(View.VISIBLE);
+                    searchView4.bringToFront();
+                    flag_add3 = true;
+                    flag_add1 = false;
+                    flag_add2 = false;
                 }
             }
         });
@@ -494,10 +513,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 searchView4.clearSearchFocus();
                 btn_add4.setVisibility(View.GONE);
                 searchView4.setVisibility(View.GONE);
-                flag_add2=true;
+                flag_add2 = true;
                 flag_add1 = false;
                 flag_add3 = false;
-                flag_add4= true;
+                flag_add4 = true;
             }
         });
         return view;
@@ -525,36 +544,30 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                         if (flag_add1) {
                             searchView2.hideProgress();
                             searchView2.setSearchText(result);
-
-                        } else
-                        if(flag_add2){
+                            Log.e("Json Camera1", result);
+                        } else if (flag_add2) {
                             searchView3.hideProgress();
                             searchView3.setSearchText(result);
-                            Log.e("Json Camera", result);
-                        }else
-                            if(flag_add3){
-                                searchView4.hideProgress();
-                                searchView4.setSearchText(result);
-                                Log.e("Json Camera", result);
-                            }
-                        else
-                            {
-                                searchView1.hideProgress();
-                                searchView1.setSearchText(result);
-                                Log.e("Json Camera", result);
-                            }
+                            Log.e("Json Camera2", result);
+                        } else if (flag_add3) {
+                            searchView4.hideProgress();
+                            searchView4.setSearchText(result);
+                            Log.e("Json Camera3", result);
+                        } else {
+                            searchView1.hideProgress();
+                            searchView1.setSearchText(result);
+                            Log.e("Json Camera4", result);
+                        }
                     }
                 });
                 task.setContext(getContext());
                 if (flag_add1) {
                     searchView2.showProgress();
-                } else
-                if(flag_add2) {
+                } else if (flag_add2) {
                     searchView3.showProgress();
-                }else
-                if(flag_add3){
+                } else if (flag_add3) {
                     searchView4.showProgress();
-                }else{
+                } else {
                     searchView1.showProgress();
                 }
                 task.execute(String.valueOf(camera.target.latitude), String.valueOf(camera.target.longitude));
@@ -599,31 +612,50 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                 getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(!enabled) {
+        if (!enabled) {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
-        }
-        else {
+        } else {
             Criteria criteria = new Criteria();
             provider = locationManager.getBestProvider(criteria, false);
-            Location location = locationManager.getLastKnownLocation(provider);
-            locationManager.requestLocationUpdates(provider,1000,
-                    500.0f, locationListener);
-            if(location!=null){
-                double dLatitude = location.getLatitude();
-                double dLongitude = location.getLongitude();
-                Log.i("APPLICATION"," : "+dLatitude);
-                Log.i("APPLICATION"," : "+dLongitude);
-                mMap.addMarker(new MarkerOptions().position(
-                        new LatLng(dLatitude, dLongitude)).alpha(0));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 18));
-
+            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
             }else {
-                Toast.makeText(getContext(),"Please enable GPS",Toast.LENGTH_SHORT).show();
+                Location location = locationManager.getLastKnownLocation(provider);
+                locationManager.requestLocationUpdates(provider, 1000,
+                        500.0f, locationListener);
+                if (location != null) {
+                    double dLatitude = location.getLatitude();
+                    double dLongitude = location.getLongitude();
+                    Log.i("APPLICATION", " : " + dLatitude);
+                    Log.i("APPLICATION", " : " + dLongitude);
+                    mMap.addMarker(new MarkerOptions().position(
+                            new LatLng(dLatitude, dLongitude)).alpha(0));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(dLatitude, dLongitude), 18));
+
+                } else {
+                    Toast.makeText(getContext(), "Please enable GPS", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
+    }
+    public int findFirstDigit(String s){
+        char[] crs = s.toCharArray();
+        int pos=0;
+        for (int i = 0; i < crs.length; i++) {
+            if (Character.isDigit(crs[i])) {
+                pos=i;
+                break;
+            }
+        }
+        return pos;
+    }
 }

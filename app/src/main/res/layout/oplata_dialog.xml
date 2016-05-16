@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/oplata_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:background="@color/white">
+    <FrameLayout
+        android:id="@+id/oplata_display_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerHorizontal="true">
+
+        <include
+            layout="@layout/header_oplata"
+            android:layout_width="match_parent"
+            android:layout_height="60dip" />
+
+    </FrameLayout>
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin1"
+        android:layout_below="@+id/oplata_display_background">
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt1" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Наличный расчет" android:textColor="@color/mainblue" android:layout_toRightOf="@+id/im1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im11" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center|right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin2"
+        android:layout_below="@+id/lin1" >
+        <TextView android:layout_width="wrap_content" android:id="@+id/txt2" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Безналичный расчет" android:textColor="@color/mainblue"
+            android:layout_toRightOf="@+id/im2"
+            android:layout_toEndOf="@+id/im2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im22" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/done_button"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="ОК"
+        android:textSize="@dimen/done_label_size"
+        android:textColor="@color/mainblue"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/lin2" />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Отмена"
+        android:id="@+id/cancel_button"
+        android:textSize="@dimen/done_label_size"
+        android:background="@android:color/transparent"
+        android:textColor="@color/mainblue"
+        android:layout_alignTop="@+id/done_button"
+        android:layout_toLeftOf="@+id/done_button"
+        android:layout_toStartOf="@+id/done_button" />
+</RelativeLayout>
+
+

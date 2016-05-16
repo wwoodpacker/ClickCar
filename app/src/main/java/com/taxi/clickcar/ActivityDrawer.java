@@ -103,8 +103,10 @@ public class ActivityDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
             ftrans.beginTransaction().replace(R.id.container, fsettings).commit();
-        }
+        }else if(id==R.id.nav_exit) {
 
+            startActivity(new Intent(this , MainActivity.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -218,5 +218,26 @@
         android:layout_alignBottom="@+id/btn_dop"
 
         android:layout_toLeftOf="@+id/imgCondition" />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_time"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/btn_date"
+        android:layout_alignBottom="@+id/btn_date"
+        android:layout_alignRight="@+id/btn_date"
+        android:textColor="@color/white"
+        android:layout_marginRight="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:id="@+id/txt_oplata"
+        android:layout_alignTop="@+id/btn_toplat"
+        android:layout_alignBottom="@+id/btn_toplat"
+        android:layout_alignRight="@+id/btn_toplat"
+        android:textColor="@color/white"
+        android:layout_marginRight="5dp"
+        />
 </RelativeLayout>
