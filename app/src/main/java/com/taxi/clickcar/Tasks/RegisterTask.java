@@ -39,7 +39,7 @@ public class RegisterTask  extends AsyncTask<String,Void,String> {
         mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Проверка кода...");
+        configuration.setText(mContext.getString(R.string.check_confirm));
         mDialog.setConfiguration(configuration);
         mDialog.show();
 

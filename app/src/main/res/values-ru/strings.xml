@@ -1,0 +1,138 @@
+<resources>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="app_name">СlickСar</string>
+    <string name="action_settings"></string>
+    <string name="api_key">AIzaSyAmopzBoSZWSwFoliJNTeAl7iOLnDf5mu8</string>
+    <!--API WEB ORDERS-->
+    <string name="server_url">http://176.38.246.10:7200</string>
+    <string name="search_geo_coord">/api/geodata/search?</string>
+    <string name="search_geo_street">/api/geodata/streets/search?</string>
+    <string name="send_confirm_code_url">/api/account/register/sendConfirmCode</string>
+    <string name="sign_in_url">/api/account</string>
+    <string name="register_url">/api/account/register</string>
+    <string name="cost_url">/api/weborders/cost</string>
+    <string name="order_url">/api/weborders</string>
+    <string name="cancel_url">/api/weborders/cancel</string>
+    <string name="history_url">/api/clients/ordershistory</string>
+    <!--Intro-->
+    <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
+    <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
+    <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
+    <string name="intro2small">Округляйте сумму\nПовышайте стоимость для ускорения поиска</string>
+    <string name="intro3large">ЭТО КОНТРОЛЬ КАЧЕСТВА</string>
+    <string name="intro3small">Оставляйте отзывы к своим поездкам,\n оценивайте работу водителя это \nпозволит улучшить качество сервиса.</string>
+    <string name="btn_skip">Готово</string>
+    <!--Enter-->
+    <string name="phone">Телефон</string>
+    <string name="pass_enter">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="btn_order_taxi">Заказать такси</string>
+    <string name="error_login">Введите логин!</string>
+    <string name="error_pass">Введите пароль!</string>
+    <!--Register-->
+    <string name="name">Имя</string>
+    <string name="signin_phone">380631234567</string>
+    <string name="pass">Пароль(мин 7)</string>
+    <string name="pass_again">Повтор пароля</string>
+    <string name="btn_registration">Регистрация</string>
+    <string name="label_register">Регистрация</string>
+    <string name="resend">Повторить отправку</string>
+    <string name="confirm_code">Код подтверждения</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="error_all_fields">Заполните все поля!</string>
+    <string name="error_match_pass">Пароли не совпадают!</string>
+    <string name="error_lenght_pass">Пароль очень короткий(минимально 7)!</string>
+    <!--Left menu-->
+    <string name="drawer_item_map">Заказ</string>
+    <string name="drawer_item_history">История</string>
+    <string name="drawer_item_massages">Сообщения</string>
+    <string name="drawer_item_settings">Настройки</string>
+    <string name="drawer_item_exit">Выход</string>
+    <string name="title_activity_maps">Карта</string>
+    <!--Map order-->
+    <string name="map_order_street">Улица...</string>
+    <string name="map_order_house">Дом...</string>
+    <string name="btn_map_order">Заказать такси</string>
+    <!--Order-->
+    <string name="text_cost">0</string>
+    <string name="text_cost_min">0 грн</string>
+    <string name="text_cost_max">150 грн</string>
+    <string name="add_cost">Добавить к стоимости</string>
+    <string name="time_order">Время подачи</string>
+    <string name="time_soon">Ближайшее время</string>
+    <string name="car_class">Класс авто</string>
+    <string name="additional_order">Доп.требования</string>
+    <string name="type_payment">Тип оплаты</string>
+    <string name="comment">Коментарий</string>
+    <string name="search_car">Поиск машины...</string>
+    <string name="no_car">Машина не найдена</string>
+    <string name="car_standart">Стандарт</string>
+    <string name="car_premium">Премиум</string>
+    <string name="car_universal">Универсал</string>
+    <string name="car_minibus">Микроавтобус</string>
+    <string name="ad_baggage">Багаж</string>
+    <string name="ad_animal">Перевозка животного</string>
+    <string name="ad_conditioner">Кондиционер</string>
+    <string name="ad_courier">Курьер</string>
+    <string name="payment_cash">Наличный расчёт</string>
+    <string name="payment_noncash">Безналичный расчёт</string>
+    <string name="wrong_time">Неверное время подачи</string>
+    <string name="error_cash">Наличный расчёт запрещен</string>
+    <string name="error_noncash">Безналичный расчёт запрещен</string>
+    <!--Map2order-->
+    <string name="driver_in_way">Водитель в пути</string>
+    <string name="info_order">О заказе</string>
+    <!--History-->
+    <string name="download_history">Загрузка истории...</string>
+    <string name="retry_order">Вы действительно хотите повторить заказ?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <!--Messages-->
+    <string name="success_mail">Письмо отправлено!</string>
+    <string name="send">Отправка</string>
+    <string name="send_mail">Отправка сообщения...</string>
+    <!--Settings-->
+    <string name="language">Язык</string>
+    <string name="enter_settings">Вход</string>
+    <string name="additional_settings">Дополнительные настройки</string>
+    <string name="write_developer">Написать разработчику</string>
+    <string name="call_support">Позвонить в поддержку</string>
+    <string name="about">О программе</string>
+    <string name="rus">Русский</string>
+    <string name="ua">Українська</string>
+    <string name="eng">English</string>
+    <string name="setings_enter_header">Настройки входа</string>
+    <string name="setings_enter_text">Запомнить меня</string>
+    <string name="setings_dop_header">Доп.настройки</string>
+    <string name="setings_dop1">Определение местоположения</string>
+    <string name="setings_dop2">Уведомления</string>
+    <string name="setings_dop3">Показывать кнопку СМС</string>
+    <string name="setings_send_ok">Отправить</string>
+    <string name="setings_send_cancel">Отмена</string>
+    <string name="setings_send_header">Разработчику</string>
+    <!--Other-->
+    <string name="auth">Авторизация</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Отмена</string>
+    <string name="uah"> грн</string>
+    <string name="wrong_phone">Неверный телефон или пароль</string>
+    <string name="cancel_order">Отмена заказа...</string>
+    <string name="cancel_order2">Заказ отменен</string>
+    <string name="calc_order">Расчёт заказа...</string>
+    <string name="get_confirm">Получение кода...</string>
+    <string name="enable_gps">Включите GPS</string>
+    <string name="check_confirm">Проверка кода...</string>
+    <string name="succses_add_user">Пользователь зарегистрирован!</string>
+    <string name="error_confirm">Введите код!</string>
+    <string name="error_connection">Нет подключения!</string>
+    <string name="summa_oplata">Сумма к оплате</string>
+    <string-array name="views_array">
+        <item>Order</item>
+        <item>History</item>
+        <item>Massages</item>
+        <item>Settings</item>
+        <item>Exit</item>
+    </string-array>
+
+</resources>

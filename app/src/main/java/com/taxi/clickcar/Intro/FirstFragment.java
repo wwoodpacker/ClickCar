@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.taxi.clickcar.R;
 
 /**
@@ -24,9 +25,11 @@ public class FirstFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     private static boolean isVisible = false;
-
+    private ImageView imageView2;
+    private ImageView imageView3;
+    private ImageView imageView4;
     int pageNumber;
-    Animation animation1;
+
     Animation animation2;
     Animation animation3;
     Animation animation4;
@@ -62,18 +65,21 @@ public class FirstFragment extends Fragment {
         if(isVisible) {
 
             Log.d("111", "anim");
-            ImageView imageView2 = (ImageView) view.findViewById(R.id.imageViewLHand);
-            ImageView imageView3 = (ImageView) view.findViewById(R.id.imageViewRHand);
-            ImageView imageView4 = (ImageView) view.findViewById(R.id.imageViewMetka);
+            imageView2 = (ImageView) view.findViewById(R.id.imageViewLHand);
+            imageView3 = (ImageView) view.findViewById(R.id.imageViewRHand);
+            imageView4 = (ImageView) view.findViewById(R.id.imageViewMetka);
 
+            Glide.with(getContext()).load(R.drawable.left__hand).animate(R.anim.anim_lefthand1).into(imageView2);
+            Glide.with(getContext()).load(R.drawable.right_hand_2).animate(R.anim.anim_righthand1).into(imageView3);
+            Glide.with(getContext()).load(R.drawable.metka).animate(R.anim.anim_metka).into(imageView4);
 
-        animation2 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_lefthand1);
-        animation3 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_righthand1);
-           animation4 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_metka);
+            //animation2 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_lefthand1);
+          //  animation3 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_righthand1);
+          //  animation4 = AnimationUtils.loadAnimation(getActivity().getApplication(), R.anim.anim_metka);
 
-            imageView2.setAnimation(animation2);
-           imageView3.setAnimation(animation3);
-           imageView4.setAnimation(animation4);
+          //  imageView2.setAnimation(animation2);
+           // imageView3.setAnimation(animation3);
+           // imageView4.setAnimation(animation4);
         }
 
         return view;

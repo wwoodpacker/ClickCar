@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
@@ -39,7 +40,7 @@ public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
         Log.e("GetGeoLatLong", "in process...");
-        base_aouth = ActivityDrawer.base64EncodedCredentials;
+        base_aouth = GlobalVariables.getInstance().getBase64EncodedCredentials();
         String lat = params[0].toString();
         String lng = params[1].toString();
         HttpClient client = new DefaultHttpClient();
@@ -48,6 +49,7 @@ public class GetGeoObjectTask extends AsyncTask<String,Void,String> {
         post.setHeader("Accept", "application/json");
         post.setHeader("Content-type", "application/json; charset=utf-8");
         post.setHeader("Authorization", "Basic " + base_aouth);
+
 
         try {
             response = client.execute(post);

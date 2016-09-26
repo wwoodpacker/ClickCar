@@ -8,6 +8,7 @@ import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
@@ -43,7 +44,7 @@ public class CancelTask extends AsyncTask<String,Void,String> {
         mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Отмена заказа...");
+        configuration.setText(mContext.getString(R.string.cancel_order));
         mDialog.setConfiguration(configuration);
         mDialog.show();
 
@@ -60,7 +61,7 @@ public class CancelTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         Log.e("Cancel", "Start...");
 
-        base_aouth = ActivityDrawer.base64EncodedCredentials;
+        base_aouth = GlobalVariables.getInstance().getBase64EncodedCredentials();
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
         HttpPut post = new HttpPut(mContext.getString(R.string.server_url) + mContext.getString(R.string.cancel_url)+"/"+params[0].toString());

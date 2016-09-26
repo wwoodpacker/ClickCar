@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.taxi.clickcar.R;
 
 /**
@@ -61,7 +62,8 @@ public class SecondFragment extends Fragment {
         TextView t2=(TextView)view.findViewById(R.id.textView7);
         t1.setGravity(Gravity.CENTER);
         t2.setGravity(Gravity.CENTER);
-
+        Glide.with(getContext()).load(R.drawable.left_hand_).into(left_hand);
+        Glide.with(getContext()).load(R.drawable.right_hand).into(right_hand);
         left_hand.setVisibility(View.GONE);
         right_hand.setVisibility(View.GONE);
 

@@ -43,7 +43,7 @@ public class GetConfirmCodeTask  extends AsyncTask<String,Void,String> {
         mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Загрузка...");
+        configuration.setText(mContext.getString(R.string.get_confirm));
         mDialog.setConfiguration(configuration);
         mDialog.show();
         }

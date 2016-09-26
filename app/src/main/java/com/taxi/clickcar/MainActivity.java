@@ -1,30 +1,31 @@
 package com.taxi.clickcar;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.security.MessageDigest;
+import com.taxi.clickcar.Fragments.ConfirmFragment;
+import com.taxi.clickcar.Fragments.EnterFragment;
+import com.taxi.clickcar.Fragments.MyFragmentListener;
+import com.taxi.clickcar.Fragments.RegFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_LOGIN="LOGIN";
+    public static final String APP_PREFERENCES_PASS="PASS";
+    public static final String APP_PREFERENCES_CREDIALS="CREDIALS";
+    public static final String APP_PREFERENCES_REMEMBER="REMEMBER";
+    public SharedPreferences mSettings;
     public Button btnReg;
     public Button btnOrder;
     public Button btnEnter;
@@ -34,21 +35,26 @@ public class MainActivity extends AppCompatActivity {
     public UserRegistratonProfile userRegistratonProfile;
     public static String name="";
     public static String password="";
+    public ViewPager pager=null;
     public static String password_again="";
     public static String phone="";
-    public String hashPass="";
+    public String login="";
     public static boolean fl=false;
-    ViewPager pager;
-    PagerAdapter pagerAdapter;
+
+    public MyFragmentListener myFragmentListener;
+
     public static void setFl(boolean _fl){fl=_fl;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setBackgroundResource(R.color.mainblue);
         tabs.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-        final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager());
 
         final TabsPagerAdapter2 adapter2 = new TabsPagerAdapter2(getSupportFragmentManager());
@@ -61,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
             password=userRegistratonProfile.pass.toString();
             password_again=userRegistratonProfile.pass_again.toString();
             phone=userRegistratonProfile.phone.toString();
-           pager.setAdapter(adapter2);
+            pager.setAdapter(adapter2);
 
-           tabs.setupWithViewPager(pager);
+            tabs.setupWithViewPager(pager);
             pager.setCurrentItem(tabs.getSelectedTabPosition()+1);
 
         }
@@ -71,9 +77,14 @@ public class MainActivity extends AppCompatActivity {
             pager.setAdapter(adapter);
             tabs.setupWithViewPager(pager);
         }
-        CheckConnection();
+        StaticMethods.CheckConnection(this,mOnClickListener,getString(R.string.error_connection));
 
-
+        myFragmentListener=new MyFragmentListener() {
+            @Override
+            public void onSwitchToNextFragment() {
+                pager.setCurrentItem(1);
+            }
+        };
 
     }
     public void OnClickReg(){
@@ -89,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-          if(position==0)  return EnterFragment.newInstance(position);
+          if(position==0)  return EnterFragment.newInstance(position,myFragmentListener);
             else
                     return RegFragment.newInstance(position);
                         }
@@ -101,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position==0)  return "Вход";
-            else return "Регистрация";
+            if (position==0)  return getString(R.string.sign_in);
+            else return getString(R.string.label_register);
         }
     }
 
@@ -114,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position==0)  return EnterFragment.newInstance(position);
+            if(position==0)  return EnterFragment.newInstance(position,myFragmentListener);
             else
                 return ConfirmFragment.newInstance(position);
         }
@@ -126,15 +137,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position==0)  return "Вход";
-            else return "Регистрация";
+            if (position==0)  return getString(R.string.sign_in);
+            else return getString(R.string.label_register);
         }
     }
     public void setmOnClickListener(View.OnClickListener mOnClickListener) {
         this.mOnClickListener = mOnClickListener;
     }
 
-    public boolean CheckConnection(){
+ /*  public boolean CheckConnection(){
 
         ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo.State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
@@ -142,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING||wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
             return true;
         } else  {
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"No connection",Snackbar.LENGTH_LONG)
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),getString(R.string.error_connection),Snackbar.LENGTH_LONG)
                     .setAction("Hide", mOnClickListener);
             snackbar.setActionTextColor(Color.RED);
             View snackbarView = snackbar.getView();
@@ -155,61 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-   /* public void OnClick(View v){
-        switch (v.getId()){
-            case R.id.btn_order:
-                if (CheckConnection()){
 
-                }
-                break;
-            case R.id.btn_register:
-                if (CheckConnection()) {
-                    Intent intent = new Intent(this, Register.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.btn_sing_in:
-                if (CheckConnection()) {
-                    login = sign_login.getText().toString();
-                    password = sign_pass.getText().toString();
-
-                    if (login.length() <= 0) {
-                        Toast.makeText(this, "Please enter login", Toast.LENGTH_SHORT).show();
-                    } else if (password.length() <= 0) {
-                        Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
-                    } else {
-                       AutorizationTask task = new AutorizationTask(this);
-                        String str = "";
-                        try {
-                            hashPass=hashText(password);
-                            task.execute(login, hashPass);
-                            str = task.get();
-                            JSONObject obj = new JSONObject(str);
-                            Log.e("Auth JSON:", str);
-                            Intent intent= new Intent(this,Order.class);
-                            intent.putExtra("LOGIN",login);
-                            intent.putExtra("PASSWORD",hashPass);
-                            startActivity(intent);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-                break;
-
-        }
-
-    }*/
-
-    public  static String convertByteToHex(byte data[])
+ /*   public  static String convertByteToHex(byte data[])
     {
         StringBuffer hexData = new StringBuffer();
         for (int byteIndex = 0; byteIndex < data.length; byteIndex++)
@@ -224,6 +182,6 @@ public class MainActivity extends AppCompatActivity {
         sha512.update(textToHash.getBytes());
 
         return convertByteToHex(sha512.digest());
-    }
+    }*/
 
  }

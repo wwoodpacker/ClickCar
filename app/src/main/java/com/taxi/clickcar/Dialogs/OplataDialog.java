@@ -74,8 +74,10 @@ public class OplataDialog  extends DialogFragment {
             public void onClick(View v) {
                 if(mCheckCash){
                     mCheckCash=false;
+                    mCheckNoCash=true;
                 } else {
                     mCheckCash = true;
+                    mCheckNoCash=false;
                 }
                 changeImg();
             }
@@ -84,8 +86,10 @@ public class OplataDialog  extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if(mCheckNoCash){
+                    mCheckCash = true;
                     mCheckNoCash=false;
                 } else {
+                    mCheckCash=false;
                     mCheckNoCash=true;
                 }
                 changeImg();

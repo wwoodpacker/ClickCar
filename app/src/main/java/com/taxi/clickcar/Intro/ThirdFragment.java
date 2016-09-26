@@ -1,8 +1,8 @@
 package com.taxi.clickcar.Intro;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,22 +14,47 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MainActivity;
+import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
+import com.taxi.clickcar.Requests.AuthRequest;
+import com.taxi.clickcar.Responses.AuthResponse;
+import com.taxi.clickcar.StaticMethods;
+import com.taxi.clickcar.WebOrdersAPI.ApiClient;
+import com.taxi.clickcar.WebOrdersAPI.WebOrdersApiInterface;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Назар on 26.03.2016.
  */
 public class ThirdFragment extends Fragment {
-
+    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES_LOGIN="LOGIN";
+    public static final String APP_PREFERENCES_PASS="PASS";
+    public static final String APP_PREFERENCES_CREDIALS="CREDIALS";
+    public static final String APP_PREFERENCES_REMEMBER="REMEMBER";
+    public View.OnClickListener mOnClickListener;
+    public SharedPreferences mSettings;
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     private static boolean isVisible = false;
     private static boolean doneVisible = false;
     ImageView image_intro3;
     ImageView image_intro4;
     Button btn_skip;
-
+    public String hashPass="";
+    public String login="";
+    public  String str;
     int pageNumber;
 
     Animation animation1;
@@ -68,7 +93,8 @@ public class ThirdFragment extends Fragment {
         t2.setGravity(Gravity.CENTER);
         image_intro3=(ImageView)view.findViewById(R.id.imageintro3);
         image_intro4=(ImageView)view.findViewById(R.id.imageintro33);
-
+        Glide.with(getContext()).load(R.drawable.pages_intro3).into(image_intro3);
+        Glide.with(getContext()).load(R.drawable.hand_intro3).into(image_intro4);
 
         image_intro3.setVisibility(View.GONE);
         image_intro4.setVisibility(View.GONE);
@@ -78,8 +104,51 @@ public class ThirdFragment extends Fragment {
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),MainActivity.class);
-                startActivity(intent);
+                if (StaticMethods.CheckConnection(getActivity(), mOnClickListener, getString(R.string.error_connection))) {
+                    mSettings = getActivity().getSharedPreferences(APP_PREFERENCES, getActivity().MODE_PRIVATE);
+                    if (mSettings.contains(APP_PREFERENCES_REMEMBER)) {
+                        if (mSettings.getBoolean(APP_PREFERENCES_REMEMBER, false)) {
+                            if (mSettings.contains(APP_PREFERENCES_LOGIN)) {
+                                login = mSettings.getString(APP_PREFERENCES_LOGIN, "");
+                            }
+                            if (mSettings.contains(APP_PREFERENCES_PASS)) {
+                                hashPass = mSettings.getString(APP_PREFERENCES_PASS, "");
+                            }
+
+                            AuthRequest userAuthRequest = new AuthRequest(login, hashPass);
+                            WebOrdersApiInterface apiService = ApiClient.getClient().create(WebOrdersApiInterface.class);
+                            Call<AuthResponse> call = apiService.loadAuth(userAuthRequest);
+                            call.enqueue(new Callback<AuthResponse>() {
+                                @Override
+                                public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                                    if (response.code() == 200) {
+                                        AuthResponse user = response.body();
+                                        Intent intent = new Intent(getContext(), ActivityDrawer.class);
+                                        GlobalVariables.getInstance().setName(user.getUserFullName());
+                                        GlobalVariables.getInstance().setPhone(user.getUserPhone());
+                                        intent.putExtra("LOGIN", login);
+                                        intent.putExtra("PASSWORD", hashPass);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getContext(), getString(R.string.wrong_phone), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<AuthResponse> call, Throwable t) {
+
+                                }
+                            });
+                        } else {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+
+                    } else {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
             }
         });
 

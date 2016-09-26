@@ -29,6 +29,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Гость"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
         android:id="@+id/text_name"
         android:textSize="30sp"
         android:layout_alignBottom="@+id/imageView"
@@ -43,7 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:id="@+id/imageView8"
-
         android:background="@color/white"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="5dp" />

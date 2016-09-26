@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    <FrameLayout
+        android:id="@+id/senddevsettings_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerHorizontal="true">
+
+        <include
+            layout="@layout/header_senddev"
+            android:layout_width="match_parent"
+            android:layout_height="60dip" />
+
+    </FrameLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/black"
+        android:textColorHint="@color/maingrey"
+        android:hint="@string/drawer_item_massages"
+        android:id="@+id/txt_massage"
+        android:layout_below="@id/senddevsettings_background"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/cancel_button"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/setings_send_cancel"
+        android:textSize="@dimen/done_label_size"
+        android:textColor="@color/mainblue"
+        android:layout_below="@+id/txt_massage"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setings_send_ok"
+        android:id="@+id/done_button"
+        android:textSize="@dimen/done_label_size"
+        android:background="@android:color/transparent"
+        android:textColor="@color/mainblue"
+        android:layout_alignTop="@+id/cancel_button"
+        android:layout_toLeftOf="@+id/cancel_button"
+        android:layout_toStartOf="@+id/cancel_button" />
+    </RelativeLayout>

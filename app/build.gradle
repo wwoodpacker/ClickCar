@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'ClickCar'
+            keyPassword 't62331'
+            storeFile file('D:/ClickCar/key_store/key_release.jks')
+            storePassword 't62331'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     packagingOptions {
@@ -26,23 +34,27 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile('com.mikepenz.materialdrawer:library:0.9.5@aar') {
         transitive = true
     }
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
-
     compile 'org.json:json:20160212'
     compile 'com.leo.simplearcloader:simplearcloader:1.0.+'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-    compile 'com.google.code.gson:gson:1.7.2'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.github.bumptech.glide:glide:3.6.0'
+    // retrofit, gson
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
-    compile project(":searchviewclickcar")
-    compile project(":pickerclickcar2")
+    compile project(':searchviewclickcar')
+    compile project(':pickerclickcar2')
+    compile files('libs/activation.jar')
 }

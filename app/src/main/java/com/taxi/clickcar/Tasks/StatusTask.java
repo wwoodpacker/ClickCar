@@ -8,6 +8,7 @@ import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
@@ -55,7 +56,7 @@ public class StatusTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         Log.e("Getstatus", "Start...");
 
-        base_aouth = ActivityDrawer.base64EncodedCredentials;
+        base_aouth = GlobalVariables.getInstance().getBase64EncodedCredentials();
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
         HttpGet post = new HttpGet(mContext.getString(R.string.server_url) + mContext.getString(R.string.order_url)+"/"+params[0].toString());

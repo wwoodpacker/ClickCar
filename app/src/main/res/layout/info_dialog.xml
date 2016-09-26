@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/summa_oplata"
+        android:id="@+id/btn_suma"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:drawableLeft="@mipmap/ic_markery"
+        android:textColor="@color/mainblack"
+        android:text="ул.Металистов 7"
+        android:textSize="@dimen/mtext_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/register_element_height"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/editText4"
+        android:layout_below="@+id/btn_suma"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:drawableLeft="@mipmap/ic_markerb"
+        android:textColor="@color/mainblack"
+        android:textSize="@dimen/mtext_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/register_element_height"
+        android:text="пр.Победы 29"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/editText5"
+        android:layout_below="@+id/editText4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_order"
+        android:id="@+id/btn_date"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_below="@+id/editText5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/car_class"
+        android:id="@+id/btn_class"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_below="@+id/btn_date"
+        android:layout_marginTop="1dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/additional_order"
+        android:id="@+id/btn_dop"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_below="@+id/btn_class"
+        android:layout_marginTop="1dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/type_payment"
+        android:id="@+id/btn_toplat"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_below="@+id/btn_dop"
+        android:layout_marginTop="1dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageClass"
+        android:layout_alignTop="@+id/btn_class"
+        android:layout_alignBottom="@+id/btn_class"
+        android:layout_alignRight="@+id/btn_class"
+        android:layout_alignEnd="@+id/btn_class"
+        android:layout_marginRight="20dp" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgBaggage"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+        android:layout_alignRight="@+id/btn_dop"
+        android:layout_marginRight="5dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgAnimal"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+        android:layout_toLeftOf="@+id/imgBaggage" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgCondition"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+        android:layout_toLeftOf="@+id/imgAnimal" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgCurier"
+        android:layout_alignTop="@+id/btn_dop"
+        android:layout_alignBottom="@+id/btn_dop"
+        android:layout_toLeftOf="@+id/imgCondition" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_time"
+        android:text="@string/time_soon"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/btn_date"
+        android:layout_alignBottom="@+id/btn_date"
+        android:layout_alignRight="@+id/btn_date"
+        android:textColor="@color/black"
+        android:layout_marginRight="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:id="@+id/txt_oplata"
+        android:text="@string/payment_cash"
+        android:layout_alignTop="@+id/btn_toplat"
+        android:layout_alignBottom="@+id/btn_toplat"
+        android:layout_alignRight="@+id/btn_toplat"
+        android:textColor="@color/black"
+        android:layout_marginRight="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:id="@+id/txt_summa"
+        android:layout_alignTop="@+id/btn_suma"
+        android:layout_alignBottom="@+id/btn_suma"
+        android:layout_alignRight="@+id/btn_suma"
+        android:textColor="@color/black"
+        android:layout_marginRight="5dp"
+        />
+    <EditText
+        android:textColor="@color/mainblack"
+        android:textSize="@dimen/mtext_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/register_element_height"
+        android:hint="@string/comment"
+        android:textColorHint="@color/light_gray"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:ems="10"
+        android:id="@+id/edit_comment"
+        android:layout_below="@+id/btn_toplat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/imageView9"
+        android:layout_toStartOf="@+id/imageView9"
+        android:layout_alignBottom="@+id/imageView9" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@mipmap/icon_profile"
+        android:layout_below="@id/btn_toplat"
+        android:layout_alignParentRight="true"
+        android:id="@+id/imageView9" />
+    <Button
+        android:id="@+id/done_button"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/btn_ok"
+        android:textSize="@dimen/done_label_size"
+        android:textColor="@color/mainblue"
+        android:layout_below="@+id/edit_comment"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+  />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/black"
+    android:layout_below="@+id/btn_suma"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/editText4"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/editText5"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/btn_date"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/btn_class"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/btn_dop"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_below="@+id/btn_toplat"
+        />
+
+</RelativeLayout>

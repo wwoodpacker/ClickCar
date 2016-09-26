@@ -4,15 +4,16 @@
     android:id="@+id/oplata_dialog"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:focusable="true">
+
     <FrameLayout
         android:id="@+id/oplata_display_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/white">
 
         <include
             layout="@layout/header_oplata"
@@ -20,60 +21,90 @@
             android:layout_height="60dip" />
 
     </FrameLayout>
-    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin1"
+
+    <RelativeLayout
+        android:id="@+id/lin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/oplata_display_background">
-        <TextView android:layout_width="wrap_content" android:id="@+id/txt1" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Наличный расчет" android:textColor="@color/mainblue" android:layout_toRightOf="@+id/im1"
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" />
-        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im11" android:background="@mipmap/ic_minus"
-            android:layout_gravity="center|right"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/im1"
+            android:text="@string/payment_cash"
+            android:textColor="@color/mainblue" />
+
+        <ImageView
+            android:id="@+id/im11"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp" />
+            android:layout_gravity="center|right"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/ic_minus" />
     </RelativeLayout>
 
-    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="wrap_content" android:id="@+id/lin2"
-        android:layout_below="@+id/lin1" >
-        <TextView android:layout_width="wrap_content" android:id="@+id/txt2" android:layout_gravity="center" android:layout_height="wrap_content" android:text="Безналичный расчет" android:textColor="@color/mainblue"
-            android:layout_toRightOf="@+id/im2"
-            android:layout_toEndOf="@+id/im2"
+    <RelativeLayout
+        android:id="@+id/lin2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lin1">
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" />
-        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/im22" android:background="@mipmap/ic_minus"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/im2"
+            android:layout_toRightOf="@+id/im2"
+            android:text="@string/payment_noncash"
+            android:textColor="@color/mainblue" />
+
+        <ImageView
+            android:id="@+id/im22"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:background="@mipmap/ic_minus" />
     </RelativeLayout>
 
 
     <Button
         android:id="@+id/done_button"
-        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="ОК"
-        android:textSize="@dimen/done_label_size"
-        android:textColor="@color/mainblue"
-
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/lin2" />
-
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lin2"
+        android:background="@android:color/transparent"
+        android:minHeight="48dp"
+        android:text="@string/btn_ok"
+        android:textColor="@color/mainblue"
+        android:textSize="@dimen/done_label_size" />
 
 
     <Button
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Отмена"
-        android:id="@+id/cancel_button"
-        android:textSize="@dimen/done_label_size"
-        android:background="@android:color/transparent"
-        android:textColor="@color/mainblue"
         android:layout_alignTop="@+id/done_button"
         android:layout_toLeftOf="@+id/done_button"
-        android:layout_toStartOf="@+id/done_button" />
+        android:layout_toStartOf="@+id/done_button"
+        android:background="@android:color/transparent"
+        android:text="@string/btn_cancel"
+        android:textColor="@color/mainblue"
+        android:textSize="@dimen/done_label_size" />
 </RelativeLayout>
 
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
 
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,87 +14,87 @@
         android:layout_height="match_parent" />
 
     <ImageView
+        android:id="@+id/imageView6"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@mipmap/ic_position"
-        android:id="@+id/imageView6"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:background="@mipmap/ic_position" />
 
     <TextView
+        android:id="@+id/textDriver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Ford Focus,желтый ВК1234АА"
-        android:textColor="@color/black"
-        android:id="@+id/textDriver"
         android:layout_above="@+id/imageView6"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="20dp"
+        android:text="Ford Focus,желтый ВК1234АА"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/black" />
 
     <TextView
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Водитель в пути"
-        android:textColor="@color/black"
-        android:id="@+id/textView9"
         android:layout_above="@+id/textDriver"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/driver_in_way"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/black" />
 
     <ImageView
+        android:id="@+id/imageView7"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:id="@+id/imageView7"
-        android:background="@mipmap/ic_info"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"
+        android:background="@mipmap/ic_info" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="О заказе"
-        android:textColor="@color/mainblue"
         android:id="@+id/btn_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView7"
-        android:layout_toRightOf="@+id/imageView7"
-        android:layout_toEndOf="@+id/imageView7"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="2dp" />
+        android:layout_toEndOf="@+id/imageView7"
+        android:layout_toRightOf="@+id/imageView7"
+        android:text="@string/info_order"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/mainblue" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Отменить"
-        android:textColor="@color/mainblue"
         android:id="@+id/btn_otmena"
-        android:layout_alignTop="@+id/btn_info"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="5dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/btn_info"
+        android:layout_marginRight="5dp"
+        android:text="@string/btn_cancel"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/mainblue" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_phone"
-        android:background="@mipmap/ic_phone"
-        android:layout_above="@+id/imageView7"
-        android:layout_toLeftOf="@+id/imageView6"
-        android:layout_toStartOf="@+id/imageView6"
-        android:layout_marginBottom="5dp" />
-
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@mipmap/ic_sms"
+        android:layout_above="@+id/imageView7"
+        android:layout_alignRight="@+id/imageView6"
+        android:layout_marginBottom="5dp"
+        android:background="@mipmap/ic_phone" />
+
+    <ImageView
         android:id="@+id/btn_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btn_phone"
         android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/imageView6" />
+        android:layout_toRightOf="@+id/imageView6"
+        android:background="@mipmap/ic_sms"
+        android:visibility="gone" />
 
 </RelativeLayout>

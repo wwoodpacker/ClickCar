@@ -4,48 +4,138 @@
     <string name="app_name">СlickСar</string>
     <string name="action_settings"></string>
     <string name="api_key">AIzaSyAmopzBoSZWSwFoliJNTeAl7iOLnDf5mu8</string>
+    <!--API WEB ORDERS-->
     <string name="server_url">http://176.38.246.10:7200</string>
     <string name="search_geo_coord">/api/geodata/search?</string>
-
+    <string name="search_geo_street">/api/geodata/streets/search?</string>
     <string name="send_confirm_code_url">/api/account/register/sendConfirmCode</string>
     <string name="sign_in_url">/api/account</string>
     <string name="register_url">/api/account/register</string>
     <string name="cost_url">/api/weborders/cost</string>
     <string name="order_url">/api/weborders</string>
     <string name="cancel_url">/api/weborders/cancel</string>
-    <string name="intro1large">ЭТО ПОИСК ПО КАРТЕ</string>
-    <string name="intro1small">При включении GPS, в качестве первой точки маршрута подставляется ваше местоположение.\nАдрес можно уточнить прямо на карте</string>
-    <string name="intro2large">ЭТО УПРАВЛЕНИЕ СТОИМОСТЬЮ</string>
-    <string name="intro2small">Округляйте сумму\nПовышайте стоимость для ускорения поиска</string>
-    <string name="intro3large">ЭТО КОНТРОЛЬ КАЧЕСТВА</string>
-    <string name="intro3small">Оставляйте отзывы к своим поездкам,\n оценивайте работу водителя это \nпозволит улучшить качество сервиса.</string>
-    <string name="btn_order_taxi">Заказать такси</string>
-    <string name="btn_registration">Регистация</string>
-    <string name="label_register">Регистрация</string>
-    <string name="login">Логин(Почта)</string>
+    <string name="history_url">/api/clients/ordershistory</string>
+    <!--Intro-->
+    <string name="intro1large">SEARCH BY MAP</string>
+    <string name="intro1small">When GPS is turned on, as the first point of the route is inserted your location.\nAddress can be specified directly on the map.</string>
+    <string name="intro2large">COST MANAGEMENT</string>
+    <string name="intro2small">Round coast\nIncrease coast to speed up the search</string>
+    <string name="intro3large">QUALITY CONTROL</string>
+    <string name="intro3small">Leave feedback for your trips,\n  evaluate the work of the driver it\nwill improve the quality of service.</string>
+    <string name="btn_skip">Skip</string>
+    <!--Enter-->
+    <string name="phone">Phone</string>
+    <string name="pass_enter">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="btn_order_taxi">Take taxi</string>
+    <string name="error_login">Please enter login!</string>
+    <string name="error_pass">Please enter password!</string>
+    <!--Register-->
+    <string name="name">Name</string>
     <string name="signin_phone">380631234567</string>
-    <string name="name">Имя</string>
-    <string name="phone">Телефон</string>
-    <string name="pass">Пароль(мин 7)</string>
-    <string name="pass_again">Пароль повторно</string>
-    <string name="accses_reg">Подтвердить</string>
-    <string name="confirm_code">Код подтверждения</string>
-    <string name="confirm">Подтвердить</string>
-    <string name="sing_in">Вход</string>
-
-    <string name="drawer_item_map">Заказ</string>
-    <string name="drawer_item_history">История</string>
-    <string name="drawer_item_massages">Сообщения</string>
-    <string name="drawer_item_settings">Настройки</string>
-    <string name="drawer_item_exit">Выход</string>
+    <string name="pass">Password(min 7)</string>
+    <string name="pass_again">Password again</string>
+    <string name="btn_registration">Sign up</string>
+    <string name="label_register">Register</string>
+    <string name="resend">Resend</string>
+    <string name="confirm_code">Confirm code</string>
+    <string name="confirm">Confirm</string>
+    <string name="error_all_fields">Complete all fields!</string>
+    <string name="error_match_pass">Password mismatch!</string>
+    <string name="error_lenght_pass">Password is too short(minimal 7)!</string>
+    <!--Left menu-->
+    <string name="drawer_item_map">Order</string>
+    <string name="drawer_item_history">History</string>
+    <string name="drawer_item_massages">Messages</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_exit">Exit</string>
     <string name="title_activity_maps">Map</string>
-
+    <!--Map order-->
+    <string name="map_order_street">Street...</string>
+    <string name="map_order_house">House...</string>
+    <string name="btn_map_order">Order taxi</string>
+    <!--Order-->
+    <string name="text_cost">0</string>
+    <string name="text_cost_min">0 UAH</string>
+    <string name="text_cost_max">150 UAH</string>
+    <string name="add_cost">Add to cost</string>
+    <string name="time_order">Arrival time</string>
+    <string name="time_soon">Soon as possible</string>
+    <string name="car_class">Car class</string>
+    <string name="additional_order">Ad.requirements</string>
+    <string name="type_payment">Payment type</string>
+    <string name="comment">Comment</string>
+    <string name="search_car">Searching car...</string>
+    <string name="no_car">Car not found</string>
+    <string name="car_standart">Standart</string>
+    <string name="car_premium">Premium</string>
+    <string name="car_universal">Wagon</string>
+    <string name="car_minibus">Minibus</string>
+    <string name="ad_baggage">Baggage</string>
+    <string name="ad_animal">Animal</string>
+    <string name="ad_conditioner">Conditioner</string>
+    <string name="ad_courier">Courier</string>
+    <string name="payment_cash">Cash</string>
+    <string name="payment_noncash">Noncash</string>
+    <string name="wrong_time">Wrong time</string>
+    <string name="error_cash">Cash payment forbidden</string>
+    <string name="error_noncash">Noncash payment forbidden</string>
+    <!--Map2order-->
+    <string name="driver_in_way">Driver in a way</string>
+    <string name="info_order">About order</string>
+    <!--History-->
+    <string name="download_history">Loading history...</string>
+    <string name="retry_order">You really want to repeat order?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <!--Messages-->
+    <string name="success_mail">Mail send!</string>
+    <string name="send">Sending</string>
+    <string name="send_mail">Sending message...</string>
+    <!--Settings-->
+    <string name="language">Language</string>
+    <string name="enter_settings">Enter</string>
+    <string name="additional_settings">Additional settings</string>
+    <string name="write_developer">Mail to developer</string>
+    <string name="call_support">Call to support</string>
+    <string name="about">About</string>
+    <string name="rus">Русский</string>
+    <string name="ua">Українська</string>
+    <string name="eng">English</string>
+    <string name="setings_enter_header">Enter settings</string>
+    <string name="setings_enter_text">Remember me</string>
+    <string name="setings_dop_header">Ad.settings</string>
+    <string name="setings_dop1">Locations</string>
+    <string name="setings_dop2">Notifications</string>
+    <string name="setings_dop3">Show SMS button</string>
+    <string name="setings_send_ok">Send</string>
+    <string name="setings_send_cancel">Cancel</string>
+    <string name="setings_send_header">Write Dev</string>
+    <!--Other-->
+    <string name="auth">Authorization</string>
+    <string name="btn_ok">OK</string>
+    <string name="uah"> UAH</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="wrong_phone">Wrong phone or password</string>
+    <string name="cancel_order">Cancel order...</string>
+    <string name="cancel_order2">Order canceled</string>
+    <string name="calc_order">Calculation order...</string>
+    <string name="get_confirm">Getting confirm code...</string>
+    <string name="enable_gps">Please enable GPS</string>
+    <string name="check_confirm">Checking code...</string>
+    <string name="succses_add_user">User register!</string>
+    <string name="error_confirm">Please enter confirm code!</string>
+    <string name="error_connection">No connection!</string>
+    <string name="summa_oplata">Amount to pay</string>
     <string-array name="views_array">
-        <item>Заказ</item>
-        <item>История</item>
-        <item>Сообщения</item>
-        <item>Настройки</item>
-        <item>Выход</item>
+        <item>Order</item>
+        <item>History</item>
+        <item>Massages</item>
+        <item>Settings</item>
+        <item>Exit</item>
     </string-array>
+
+
+
 
 </resources>

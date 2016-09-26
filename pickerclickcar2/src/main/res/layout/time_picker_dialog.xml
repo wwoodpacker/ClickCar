@@ -62,10 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="ОК"
+        android:text="@string/btn_ok"
         android:textSize="@dimen/done_label_size"
         android:textColor="@color/mainblue"
-
         android:layout_below="@+id/time_picker"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -75,7 +74,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Отмена"
+        android:text="@string/btn_cancel"
         android:id="@+id/cancel_button"
         android:textSize="@dimen/done_label_size"
         android:background="@android:color/transparent"

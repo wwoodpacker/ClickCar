@@ -8,6 +8,7 @@ import com.leo.simplearcloader.ArcConfiguration;
 import com.leo.simplearcloader.SimpleArcDialog;
 import com.leo.simplearcloader.SimpleArcLoader;
 import com.taxi.clickcar.ActivityDrawer;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 
@@ -42,7 +43,7 @@ public class OrderTask extends AsyncTask<String,Void,String> {
         mDialog = new SimpleArcDialog(mContext);
         ArcConfiguration configuration = new ArcConfiguration(mContext);
         configuration.setLoaderStyle(SimpleArcLoader.STYLE.SIMPLE_ARC);
-        configuration.setText("Поиск машины...");
+        configuration.setText(mContext.getString(R.string.search_car));
         mDialog.setConfiguration(configuration);
         mDialog.show();
 
@@ -59,7 +60,7 @@ public class OrderTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         Log.e("Search avto", "Start...");
 
-        base_aouth = ActivityDrawer.base64EncodedCredentials;
+        base_aouth = GlobalVariables.getInstance().getBase64EncodedCredentials();
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = null;
         HttpPost post = new HttpPost(mContext.getString(R.string.server_url) + mContext.getString(R.string.order_url));

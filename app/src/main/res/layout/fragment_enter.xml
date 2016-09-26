@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<EditText
-    android:drawableLeft="@mipmap/icon_phone"
-    android:textColor="@color/mainblack"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/phone"
-    android:textColorHint="#b1b1b1"
+    android:layout_height="match_parent">
 
-    android:inputType="phone"
-    android:ems="10"
-    android:id="@+id/edit_phone"
-    android:layout_marginTop="5dp" />
+    <EditText
+        android:id="@+id/edit_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@mipmap/icon_phone"
+        android:ems="10"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        android:textColor="@color/mainblack"
+        android:textColorHint="#b1b1b1" />
 
-<EditText
-    android:drawableLeft="@mipmap/icon_pass"
-    android:textColor="@color/mainblack"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Пароль"
-    android:textColorHint="#b1b1b1"
-    android:inputType="textPassword"
-    android:ems="10"
-    android:id="@+id/edit_pass"
-    android:layout_below="@+id/edit_phone" />
+    <EditText
+        android:id="@+id/edit_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_phone"
+        android:drawableLeft="@mipmap/icon_pass"
+        android:ems="10"
+        android:hint="@string/pass_enter"
+        android:inputType="textPassword"
+        android:textColor="@color/mainblack"
+        android:textColorHint="#b1b1b1" />
 
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/mainyellow"
-    android:textColor="@color/white"
-    android:text="Вход"
-    android:id="@+id/btn_enter"
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_order"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/mainyellow"
+        android:text="@string/sign_in"
+        android:textColor="@color/white" />
 
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_above="@+id/btn_order"
-    android:layout_marginBottom="5dp" />
-
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/mainyellow"
-
-    android:textColor="@color/white"
-    android:text="Заказать такси"
-    android:id="@+id/btn_order"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp" />
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/mainyellow"
+        android:text="@string/btn_registration"
+        android:textColor="@color/white" />
 </RelativeLayout>

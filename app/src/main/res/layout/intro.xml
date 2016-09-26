@@ -47,32 +47,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewLHand"
-        android:background="@drawable/left__hand"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView7"
-        android:layout_above="@+id/indicator" />
+        android:layout_alignBottom="@+id/indicator"
+         />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewMetka"
-        android:background="@drawable/metka"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/indicator"
         android:layout_below="@+id/textView7"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:layout_alignBottom="@+id/indicator" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewRHand"
-        android:background="@drawable/right_hand_2"
+
         android:layout_alignRight="@+id/textView7"
         android:layout_alignEnd="@+id/textView7"
         android:layout_alignTop="@+id/imageViewHome"
-        android:layout_above="@+id/indicator" />
+        android:layout_alignBottom="@+id/indicator" />
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
