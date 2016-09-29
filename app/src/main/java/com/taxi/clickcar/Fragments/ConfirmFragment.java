@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leo.simplearcloader.SimpleArcDialog;
@@ -38,8 +40,10 @@ public class ConfirmFragment extends Fragment {
     public SimpleArcDialog mDialog;
     public View.OnClickListener mOnClickListener;
     public String confirm_code;
-    public static ConfirmFragment newInstance(int page) {
+    public static MyFragmentListener myFragmentListener=null;
+    public static ConfirmFragment newInstance(int page,MyFragmentListener _listener) {
         ConfirmFragment confirmFragment = new ConfirmFragment();
+        myFragmentListener=_listener;
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         confirmFragment.setArguments(arguments);
@@ -65,6 +69,7 @@ public class ConfirmFragment extends Fragment {
         Log.d("confirm", "oncreateview");
         View view = inflater.inflate(R.layout.fragment_confirm, null);
         Button btn1 = (Button) view.findViewById(R.id.btn_confirm);
+        TextView btn2 = (TextView)view.findViewById(R.id.textView10);
         final EditText confirm = (EditText) view.findViewById(R.id.edit_confirm);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +93,14 @@ public class ConfirmFragment extends Fragment {
                             @Override
                             public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
                                 if(response.code()==200){
-                                    MainActivity.setFl(false);
                                     mDialog.dismiss();
                                     Toast.makeText(getContext(), getString(R.string.succses_add_user), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(getContext(), MainActivity.class);
-                                    startActivity(intent);
+                                    myFragmentListener.onSwitchToBackFragment();
+                                    FragmentTransaction trans = getFragmentManager().beginTransaction();
+                                    trans.replace(R.id.root_frame, new RegFragment());
+                                    trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                    trans.addToBackStack(null);
+                                    trans.commit();
                                 }else{
                                     mDialog.dismiss();
                                     StatusResponse error = ErrorUtils.parseError(response);
@@ -107,6 +115,46 @@ public class ConfirmFragment extends Fragment {
                             }
                         });
                     }
+                }
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StaticMethods.CheckConnection(getActivity(),mOnClickListener,getString(R.string.error_connection))) {
+                    mDialog.show();
+                    RegisterRequest registerRequest = new RegisterRequest(GlobalVariables.getInstance().getRegisterPhone(),
+                            confirm_code,
+                            GlobalVariables.getInstance().getRegisterPassword(),
+                            GlobalVariables.getInstance().getRegisterPasswordAgain(),
+                            GlobalVariables.getInstance().getRegisterName());
+                    WebOrdersApiInterface apiService= ApiClient.getClient().create(WebOrdersApiInterface.class);
+                    Call<StatusResponse> call= apiService.registerUser(registerRequest);
+                    call.enqueue(new Callback<StatusResponse>() {
+                        @Override
+                        public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                            if(response.code()==200){
+                                mDialog.dismiss();
+                                Toast.makeText(getContext(), getString(R.string.succses_add_user), Toast.LENGTH_LONG).show();
+                                myFragmentListener.onSwitchToBackFragment();
+                                FragmentTransaction trans = getFragmentManager().beginTransaction();
+                                trans.replace(R.id.root_frame, new RegFragment());
+                                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                trans.addToBackStack(null);
+                                trans.commit();
+                            }else{
+                                mDialog.dismiss();
+                                StatusResponse error = ErrorUtils.parseError(response);
+                                Toast.makeText(getContext(),  error.getStatus(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<StatusResponse> call, Throwable t) {
+                            mDialog.dismiss();
+                            Log.e("ConfirmFrag onFailure",t.toString());
+                        }
+                    });
                 }
             }
         });

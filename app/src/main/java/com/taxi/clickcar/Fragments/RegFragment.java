@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,16 +97,17 @@ public class RegFragment extends Fragment {
                 PhoneRequest phoneRequest = new PhoneRequest(ed_phone.getText().toString());
 
                 WebOrdersApiInterface apiService= ApiClient.getClient().create(WebOrdersApiInterface.class);
-                Call<StatusResponse> call= apiService.getConfirmCode(phoneRequest);
-                call.enqueue(new Callback<StatusResponse>() {
+                Call<Void> call= apiService.getConfirmCode(phoneRequest);
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
-                        if(response.code()==429){
-                            MainActivity.setFl(true);
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.code()==200){
                             mDialog.dismiss();
-                            Toast.makeText(getContext(),  getString(R.string.succses_add_user), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
+                            FragmentTransaction trans = getFragmentManager().beginTransaction();
+                            trans.replace(R.id.root_frame, new ConfirmFragment());
+                            trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            trans.addToBackStack(null);
+                            trans.commit();
                         }else{
                             mDialog.dismiss();
                             StatusResponse error = ErrorUtils.parseError(response);
@@ -113,7 +115,7 @@ public class RegFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<StatusResponse> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         mDialog.dismiss();
                         Log.e("RegFragment onFailure",t.toString());
                     }

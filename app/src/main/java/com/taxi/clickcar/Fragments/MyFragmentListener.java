@@ -5,4 +5,5 @@ package com.taxi.clickcar.Fragments;
  */
 public interface MyFragmentListener {
     void onSwitchToNextFragment();
+    void onSwitchToBackFragment();
 }

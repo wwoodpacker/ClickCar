@@ -21,7 +21,7 @@ public interface WebOrdersApiInterface {
 
     @Headers({"Accept: application/json","Content-type: application/json; charset=utf-8"})
     @POST("/api/account/register/sendConfirmCode")
-    Call<StatusResponse> getConfirmCode(@Body PhoneRequest phoneRequest);
+    Call<Void> getConfirmCode(@Body PhoneRequest phoneRequest);
 
     @Headers({"Accept: application/json","Content-type: application/json; charset=utf-8"})
     @POST("/api/account/register")

@@ -17,7 +17,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/mainblack"
         android:textColorHint="#b1b1b1"
-        android:textSize="@dimen/mtext_size" />
+         />
 
     <EditText
         android:id="@+id/editText4"
@@ -32,7 +32,7 @@
         android:inputType="phone"
         android:textColor="@color/mainblack"
         android:textColorHint="#b1b1b1"
-        android:textSize="@dimen/mtext_size" />
+       />
 
     <EditText
         android:id="@+id/editText5"
@@ -47,7 +47,7 @@
         android:inputType="textPassword"
         android:textColor="@color/mainblack"
         android:textColorHint="#b1b1b1"
-        android:textSize="@dimen/mtext_size" />
+         />
 
     <EditText
         android:id="@+id/editText6"
@@ -62,7 +62,7 @@
         android:inputType="textPassword"
         android:textColor="@color/mainblack"
         android:textColorHint="#b1b1b1"
-        android:textSize="@dimen/mtext_size" />
+      />
 
     <Button
         android:id="@+id/btn_reg"
