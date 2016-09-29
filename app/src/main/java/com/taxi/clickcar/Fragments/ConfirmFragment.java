@@ -12,15 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
+import com.taxi.clickcar.Requests.RegisterRequest;
+import com.taxi.clickcar.Responses.StatusResponse;
 import com.taxi.clickcar.StaticMethods;
-import com.taxi.clickcar.Tasks.RegisterTask;
+import com.taxi.clickcar.WebOrdersAPI.ApiClient;
+import com.taxi.clickcar.WebOrdersAPI.ErrorUtils;
+import com.taxi.clickcar.WebOrdersAPI.WebOrdersApiInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Назар on 25.03.2016.
@@ -28,9 +35,10 @@ import java.util.concurrent.ExecutionException;
 public class ConfirmFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
+    public SimpleArcDialog mDialog;
     public View.OnClickListener mOnClickListener;
     public String confirm_code;
-    static ConfirmFragment newInstance(int page) {
+    public static ConfirmFragment newInstance(int page) {
         ConfirmFragment confirmFragment = new ConfirmFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
@@ -43,6 +51,7 @@ public class ConfirmFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialog= StaticMethods.getArcDialog(getContext(),getString(R.string.check_confirm));
     }
 
     @Override
@@ -57,45 +66,57 @@ public class ConfirmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_confirm, null);
         Button btn1 = (Button) view.findViewById(R.id.btn_confirm);
         final EditText confirm = (EditText) view.findViewById(R.id.edit_confirm);
-
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 confirm_code=confirm.getText().toString();
                 if (confirm_code.isEmpty()){
                     Toast.makeText(getContext(),getString(R.string.error_confirm),Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (StaticMethods.CheckConnection(getActivity(),mOnClickListener,getString(R.string.error_connection))) {
-                        RegisterTask registerTask = new RegisterTask(getContext());
-                        registerTask.execute(MainActivity.phone,
+                        mDialog.show();
+                        RegisterRequest registerRequest = new RegisterRequest(GlobalVariables.getInstance().getRegisterPhone(),
                                 confirm_code,
-                                MainActivity.password,
-                                MainActivity.password_again,
-                                MainActivity.name);
-                        try {
-                            String jsonStr = registerTask.get();
-                            Log.e("REGISTER JSON", jsonStr);
-                            JSONObject object = new JSONObject(jsonStr);
-                            Toast.makeText(getContext(), object.getString("Message"), Toast.LENGTH_SHORT).show();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), getString(R.string.succses_add_user), Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            MainActivity.setFl(false);
-                            startActivity(intent);
-                        }
+                                GlobalVariables.getInstance().getRegisterPassword(),
+                                GlobalVariables.getInstance().getRegisterPasswordAgain(),
+                                GlobalVariables.getInstance().getRegisterName());
+                        WebOrdersApiInterface apiService= ApiClient.getClient().create(WebOrdersApiInterface.class);
+                        Call<StatusResponse> call= apiService.registerUser(registerRequest);
+                        call.enqueue(new Callback<StatusResponse>() {
+                            @Override
+                            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                                if(response.code()==200){
+                                    MainActivity.setFl(false);
+                                    mDialog.dismiss();
+                                    Toast.makeText(getContext(), getString(R.string.succses_add_user), Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    mDialog.dismiss();
+                                    StatusResponse error = ErrorUtils.parseError(response);
+                                    Toast.makeText(getContext(),  error.getStatus(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                                mDialog.dismiss();
+                                Log.e("ConfirmFrag onFailure",t.toString());
+                            }
+                        });
                     }
                 }
             }
         });
-
         return view;
-
-
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("ConfirmFragment","OnDestroy");
+    }
+
 }

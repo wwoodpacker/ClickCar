@@ -26,6 +26,8 @@ import com.taxi.clickcar.WebOrdersAPI.WebOrdersApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Назар on 24.03.2016.
@@ -43,7 +45,7 @@ public class EnterFragment extends Fragment {
     public String login="";
     public static MyFragmentListener myFragmentListener=null;
 
-    static EnterFragment newInstance(int page,MyFragmentListener _listener) {
+    public static EnterFragment newInstance(int page, MyFragmentListener _listener) {
         EnterFragment enterFragment = new EnterFragment();
         myFragmentListener=_listener;
         Bundle arguments = new Bundle();
@@ -57,6 +59,7 @@ public class EnterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialog= StaticMethods.getArcDialog(getContext(),getContext().getString(R.string.auth));
 
     }
 
@@ -69,7 +72,7 @@ public class EnterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("enter", "oncreateview");
-        mDialog= StaticMethods.getArcDialog(getContext(),getContext().getString(R.string.auth));
+
         final View view = inflater.inflate(R.layout.fragment_enter, null);
         Button btn1 = (Button) view.findViewById(R.id.btn_enter);
         Button btn2 = (Button) view.findViewById(R.id.btn_order);
@@ -80,6 +83,7 @@ public class EnterFragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (StaticMethods.CheckConnection(getActivity(),mOnClickListener,getString(R.string.error_connection))) {
                     login = sign_login.getText().toString();
                     String password = sign_pass.getText().toString();
@@ -135,5 +139,12 @@ public class EnterFragment extends Fragment {
             }
         });
         return view;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e("enterFragment","OnDestroy");
     }
 }

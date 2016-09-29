@@ -1,7 +1,10 @@
 package com.taxi.clickcar.WebOrdersAPI;
 
 import com.taxi.clickcar.Requests.AuthRequest;
+import com.taxi.clickcar.Requests.PhoneRequest;
+import com.taxi.clickcar.Requests.RegisterRequest;
 import com.taxi.clickcar.Responses.AuthResponse;
+import com.taxi.clickcar.Responses.StatusResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,4 +19,11 @@ public interface WebOrdersApiInterface {
     @POST("/api/account")
     Call<AuthResponse> loadAuth(@Body AuthRequest user_authRequest);
 
+    @Headers({"Accept: application/json","Content-type: application/json; charset=utf-8"})
+    @POST("/api/account/register/sendConfirmCode")
+    Call<StatusResponse> getConfirmCode(@Body PhoneRequest phoneRequest);
+
+    @Headers({"Accept: application/json","Content-type: application/json; charset=utf-8"})
+    @POST("/api/account/register")
+    Call<StatusResponse> registerUser(@Body RegisterRequest registerRequest);
 }

@@ -12,16 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.leo.simplearcloader.SimpleArcDialog;
+import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MainActivity;
 import com.taxi.clickcar.R;
+import com.taxi.clickcar.Requests.PhoneRequest;
+import com.taxi.clickcar.Responses.StatusResponse;
 import com.taxi.clickcar.StaticMethods;
-import com.taxi.clickcar.Tasks.GetConfirmCodeTask;
-import com.taxi.clickcar.UserRegistratonProfile;
+import com.taxi.clickcar.WebOrdersAPI.ApiClient;
+import com.taxi.clickcar.WebOrdersAPI.ErrorUtils;
+import com.taxi.clickcar.WebOrdersAPI.WebOrdersApiInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Назар on 24.03.2016.
@@ -30,12 +36,13 @@ public class RegFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     public View.OnClickListener mOnClickListener;
+    public SimpleArcDialog mDialog;
     public EditText ed_name;
     public EditText ed_phone;
     public EditText ed_pass;
     public EditText ed_pass_again;
 
-    static RegFragment newInstance(int page) {
+    public static RegFragment newInstance(int page) {
         RegFragment regFragment = new RegFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
@@ -48,6 +55,7 @@ public class RegFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialog= StaticMethods.getArcDialog(getContext(),getString(R.string.get_confirm));
     }
 
     @Override
@@ -70,42 +78,57 @@ public class RegFragment extends Fragment {
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              UserRegistratonProfile userRegProf = new UserRegistratonProfile(
-                ed_name.getText().toString(),
-                ed_phone.getText().toString(),
-                ed_pass.getText().toString(),
-                ed_pass_again.getText().toString()
-        );
-        if (userRegProf.name.length() == 0 || userRegProf.phone.length() == 0 || userRegProf.pass.length() == 0 || userRegProf.pass_again.length() == 0) {
+
+                GlobalVariables.getInstance().setRegisterName(ed_name.getText().toString());
+                GlobalVariables.getInstance().setRegisterPhone(ed_phone.getText().toString());
+                GlobalVariables.getInstance().setRegisterPassword(ed_pass.getText().toString());
+                GlobalVariables.getInstance().setRegisterPasswordAgain(ed_pass_again.getText().toString());
+
+        if (GlobalVariables.getInstance().getRegisterName().length() == 0 || GlobalVariables.getInstance().getRegisterPhone().length() == 0 || GlobalVariables.getInstance().getRegisterPassword().length() == 0 || GlobalVariables.getInstance().getRegisterPasswordAgain().length() == 0) {
             Toast.makeText(getContext(), getString(R.string.error_all_fields), Toast.LENGTH_SHORT).show();
-        } else if (!userRegProf.pass.contains(userRegProf.pass_again)) {
+        } else if (!GlobalVariables.getInstance().getRegisterPassword().contains(GlobalVariables.getInstance().getRegisterPasswordAgain())) {
             Toast.makeText(getContext(), getString(R.string.error_match_pass), Toast.LENGTH_SHORT).show();
-        } else if (userRegProf.pass.length() < 6) {
+        } else if (GlobalVariables.getInstance().getRegisterPassword().length() < 6) {
             Toast.makeText(getContext(), getString(R.string.error_lenght_pass), Toast.LENGTH_SHORT).show();
         } else {
             if (StaticMethods.CheckConnection(getActivity(),mOnClickListener,getString(R.string.error_connection))) {
-                GetConfirmCodeTask getConfirmCode = new GetConfirmCodeTask(getContext());
-                getConfirmCode.execute(ed_phone.getText().toString());
-                try {
-                    String jsonstr = getConfirmCode.get();
-                    JSONObject object = new JSONObject(jsonstr);
-                    Toast.makeText(getContext(), object.getString("Message"), Toast.LENGTH_SHORT).show();
+                mDialog.show();
+                PhoneRequest phoneRequest = new PhoneRequest(ed_phone.getText().toString());
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    MainActivity.setFl(true);
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.putExtra(UserRegistratonProfile.class.getCanonicalName(), userRegProf);
-                    startActivity(intent);
-                }
+                WebOrdersApiInterface apiService= ApiClient.getClient().create(WebOrdersApiInterface.class);
+                Call<StatusResponse> call= apiService.getConfirmCode(phoneRequest);
+                call.enqueue(new Callback<StatusResponse>() {
+                    @Override
+                    public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                        if(response.code()==429){
+                            MainActivity.setFl(true);
+                            mDialog.dismiss();
+                            Toast.makeText(getContext(),  getString(R.string.succses_add_user), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            mDialog.dismiss();
+                            StatusResponse error = ErrorUtils.parseError(response);
+                            Toast.makeText(getContext(),  error.getStatus(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<StatusResponse> call, Throwable t) {
+                        mDialog.dismiss();
+                        Log.e("RegFragment onFailure",t.toString());
+                    }
+
+                });
             }
         }
     }
-     });
+    });
         return v;
  }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("RegFragment","OnDestroy");
+        }
 }

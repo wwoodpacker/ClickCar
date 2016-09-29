@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public EditText sign_login;
     public EditText sign_pass;
     public View.OnClickListener mOnClickListener;
-    public UserRegistratonProfile userRegistratonProfile;
     public static String name="";
     public static String password="";
     public ViewPager pager=null;
@@ -42,15 +41,12 @@ public class MainActivity extends AppCompatActivity {
     public static boolean fl=false;
 
     public MyFragmentListener myFragmentListener;
-
+//https://github.com/danilao/fragments-viewpager-example/blob/master/src/com/pineappslab/frcontainer/FirstFragment.java
     public static void setFl(boolean _fl){fl=_fl;}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         final TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setBackgroundResource(R.color.mainblue);
         tabs.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
@@ -60,15 +56,11 @@ public class MainActivity extends AppCompatActivity {
         final TabsPagerAdapter2 adapter2 = new TabsPagerAdapter2(getSupportFragmentManager());
 
         if (fl) {
-
-            userRegistratonProfile = (UserRegistratonProfile)getIntent().getParcelableExtra(
-                    UserRegistratonProfile.class.getCanonicalName());
-            name=userRegistratonProfile.name.toString();
-            password=userRegistratonProfile.pass.toString();
-            password_again=userRegistratonProfile.pass_again.toString();
-            phone=userRegistratonProfile.phone.toString();
+            name=GlobalVariables.getInstance().getRegisterName();
+            password=GlobalVariables.getInstance().getRegisterPassword();
+            password_again=GlobalVariables.getInstance().getRegisterPasswordAgain();
+            phone=GlobalVariables.getInstance().getRegisterPhone();
             pager.setAdapter(adapter2);
-
             tabs.setupWithViewPager(pager);
             pager.setCurrentItem(tabs.getSelectedTabPosition()+1);
 
@@ -144,44 +136,4 @@ public class MainActivity extends AppCompatActivity {
     public void setmOnClickListener(View.OnClickListener mOnClickListener) {
         this.mOnClickListener = mOnClickListener;
     }
-
- /*  public boolean CheckConnection(){
-
-        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo.State mobile = conMan.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
-        NetworkInfo.State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
-        if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING||wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
-            return true;
-        } else  {
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),getString(R.string.error_connection),Snackbar.LENGTH_LONG)
-                    .setAction("Hide", mOnClickListener);
-            snackbar.setActionTextColor(Color.RED);
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(Color.DKGRAY);
-            TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.RED);
-            snackbar.show();
-            return false;
-        }
-
-    }
-
-
- /*   public  static String convertByteToHex(byte data[])
-    {
-        StringBuffer hexData = new StringBuffer();
-        for (int byteIndex = 0; byteIndex < data.length; byteIndex++)
-            hexData.append(Integer.toString((data[byteIndex] & 0xff) + 0x100, 16).substring(1));
-
-        return hexData.toString();
-    }
-
-    public static String hashText(String textToHash) throws Exception
-    {
-        final MessageDigest sha512 = MessageDigest.getInstance("SHA-512");
-        sha512.update(textToHash.getBytes());
-
-        return convertByteToHex(sha512.digest());
-    }*/
-
  }

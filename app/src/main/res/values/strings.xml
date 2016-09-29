@@ -112,6 +112,7 @@
     <string name="setings_send_cancel">Cancel</string>
     <string name="setings_send_header">Write Dev</string>
     <!--Other-->
+    <string name="error">Error!</string>
     <string name="auth">Authorization</string>
     <string name="btn_ok">OK</string>
     <string name="uah"> UAH</string>

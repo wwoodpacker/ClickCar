@@ -20,8 +20,10 @@ import java.security.MessageDigest;
  * Created by Назар on 26.09.2016.
  */
 public class StaticMethods {
-    public static SimpleArcDialog mDialog=null;
+
+
     public static SimpleArcDialog getArcDialog(Context mContext,String data){
+        SimpleArcDialog mDialog=null;
         if (mDialog==null){
             mDialog = new SimpleArcDialog(mContext);
             ArcConfiguration configuration = new ArcConfiguration(mContext);

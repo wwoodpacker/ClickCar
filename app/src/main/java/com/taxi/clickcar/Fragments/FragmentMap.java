@@ -61,6 +61,7 @@ import java.util.List;
 /**
  * Created by Назар on 26.03.2016.
  */
+ //http://stackoverflow.com/questions/16236439/restoring-mapviews-state-on-rotate-and-on-back
 public class FragmentMap extends Fragment implements OnMapReadyCallback {
     private static final int PERMISSION_LOCATION_REQUEST_CODE = 1;
     public static final String APP_PREFERENCES = "mysettings";

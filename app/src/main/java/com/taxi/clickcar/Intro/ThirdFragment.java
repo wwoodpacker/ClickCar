@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.taxi.clickcar.ActivityDrawer;
 import com.taxi.clickcar.GlobalVariables;
 import com.taxi.clickcar.MainActivity;
-import com.taxi.clickcar.MyCallBack;
 import com.taxi.clickcar.R;
 import com.taxi.clickcar.Requests.AuthRequest;
 import com.taxi.clickcar.Responses.AuthResponse;
@@ -28,12 +27,11 @@ import com.taxi.clickcar.StaticMethods;
 import com.taxi.clickcar.WebOrdersAPI.ApiClient;
 import com.taxi.clickcar.WebOrdersAPI.WebOrdersApiInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Назар on 26.03.2016.
